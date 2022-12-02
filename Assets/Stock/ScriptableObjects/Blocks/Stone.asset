@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8809085f9061b4243a9bf6cebe575188, type: 3}
+  m_Name: Stone
+  m_EditorClassIdentifier: 
+  name: Stone
+  texture: {fileID: 21300000, guid: 8c7082dc737c057439ef30bb8e9ceb72, type: 3}
+  destroySprites:
+  - {fileID: 21300000, guid: c7ff88754c3483846aeff04027935825, type: 3}
+  - {fileID: 21300000, guid: 8afa68100ad52e144b8a6b1d5aca8273, type: 3}
+  - {fileID: 21300000, guid: 410351d30e51d5b409b3341d762ff548, type: 3}
+  - {fileID: 21300000, guid: e870f4fef92477a42acff8e2fecdd634, type: 3}
+  - {fileID: 21300000, guid: 13d2a7f76959d3e43ad859b2dadd58a3, type: 3}
+  - {fileID: 21300000, guid: 3d2da3fb041ff484f919535e2aacdfd1, type: 3}
+  - {fileID: 21300000, guid: 3f8c553719d049e4da75dc2b6ebd7450, type: 3}
+  - {fileID: 21300000, guid: 987e16ce37dbbd849b306161f3f19774, type: 3}
+  - {fileID: 21300000, guid: 1ee9299d543ab194c8c28a64c5c9e7a4, type: 3}
+  - {fileID: 21300000, guid: e709f550cc10d354687a20c61d095954, type: 3}
+  timeToDestroy: 2
+  destroyParticles: {fileID: 4490038703235694183, guid: 2452547be7cebee468f0ce95560bfe83, type: 3}
