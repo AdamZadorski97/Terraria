@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a189763929ca3241954aa4033bdfcc2, type: 3}
   m_Name: PlayerProporties
   m_EditorClassIdentifier: 
-  movementSpeed: 0.02
-  jumpForce: 15
+  verticalAirboneSpeedLose: 1
+  horizontalAirboneSpeedLose: 5
+  horizontalGroundedAcceleration: 2
+  maxHorizontalAirboneSpeed: 5
+  groundedSpeedLose: 15
+  maxGroundedSpeed: 10
+  movementSpeed: 10
+  jumpForce: 10
+  gravity: 45
