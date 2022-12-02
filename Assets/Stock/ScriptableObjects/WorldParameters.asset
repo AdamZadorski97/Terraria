@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52035e3836e657c42bdcf15a87d82412, type: 3}
   m_Name: WorldParameters
   m_EditorClassIdentifier: 
-  worldSize: {x: 10, y: 0}
+  worldSize: {x: 10, y: 20}

@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    public BlockProporties blockProporties;
 
-    // Update is called once per frame
-    void Update()
+
+    public void Start()
     {
-        
+        spriteRenderer.sprite = blockProporties.texture;
     }
 }

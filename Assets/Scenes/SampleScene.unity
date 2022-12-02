@@ -238,6 +238,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldParameters: {fileID: 11400000, guid: b6bdc6c29d86e6c46a6f92a03184ea55, type: 2}
   blockPrefab: {fileID: 5702845652740076606, guid: 81a3b765f4db3a648ace687fe5a66f9e, type: 3}
+  blockProporties:
+  - texture: {fileID: 21300000, guid: 8c7082dc737c057439ef30bb8e9ceb72, type: 3}
+    name: Stone
 --- !u!4 &1276396802
 Transform:
   m_ObjectHideFlags: 0
