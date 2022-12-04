@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 94393d57a8dfc3141890550e6820b473, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,10 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5004229980635632727}
-  blockProporties:
-    texture: {fileID: 0}
-    name: 
-    destroyTime: 0
+  blockProporties: {fileID: 0}
 --- !u!61 &-8351849614956966790
 BoxCollider2D:
   m_ObjectHideFlags: 0
