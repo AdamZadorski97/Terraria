@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class InputController : MonoBehaviour
 {
@@ -25,10 +26,11 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        MouseInput();
+        MouseInput2();
+        // MouseInput();
         KeyboardInput();
 
-        rb.velocity = moveVector;
+        //   rb.velocity = moveVector;
     }
     private void LateUpdate()
     {
@@ -41,7 +43,7 @@ public class InputController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            if(inputValue!=Vector2.zero)
+            if (inputValue != Vector2.zero)
             {
                 moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * playerProporties.maxGroundedSpeed, moveVector.y), Time.deltaTime * playerProporties.horizontalGroundedAcceleration);
             }
@@ -49,7 +51,7 @@ public class InputController : MonoBehaviour
             {
                 moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * playerProporties.maxGroundedSpeed, moveVector.y), Time.deltaTime * playerProporties.groundedSpeedLose);
             }
-           
+
         }
     }
 
@@ -77,7 +79,7 @@ public class InputController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x/2, capsuleCollider.size.y / 2) - new Vector3(0,0.1f,0);
+        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 2, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
         Vector2 direction = Vector2.right;
         float distance = capsuleCollider.size.x / 2;
 
@@ -144,4 +146,77 @@ public class InputController : MonoBehaviour
 
         }
     }
+    public SpriteShapeController spriteShapeController;
+    private Spline spline;
+    private int inseretedPointIndex = INVALLID_INSERTED_POINT_INDEX;
+    const int INVALLID_INSERTED_POINT_INDEX = -1;
+    private void MouseInput2()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mouseDownPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1.0f));
+            Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mRay.origin, Vector2.zero, Mathf.Infinity);
+            if (hit.collider != null)
+            {
+                if (hit.collider.GetComponent<SpriteShapeController>())
+                {
+
+                    spline = hit.collider.GetComponent<SpriteShapeController>().spline;
+                    int pointCount = spline.GetPointCount();
+                    Debug.Log(spline.GetPointCount());
+                    int closestPointIndex = 0;
+                    float minDistance = 0;
+                    Vector2 tMin = Vector2.zero;
+                    float minDist = Mathf.Infinity;
+
+                    List<Vector2> positions = new List<Vector2>();
+                    for (var i = 0; i < pointCount; i++)
+                    {
+                        positions.Add(spline.GetPosition(i));
+                    }
+                    int x = 0;
+                    foreach (Vector2 t in positions)
+                    {
+                        float dist = Vector3.Distance(t, mouseDownPos);
+                        if (dist < minDist)
+                        {
+                            tMin = t;
+                            minDist = dist;
+                            Debug.Log(x);
+                        }
+                        x++;
+                    }
+
+                    closestPointIndex = x;
+
+                    //for (var i = 0; i < pointCount; i++)
+                    //{
+                    //    Vector3 currentPointPos = spline.GetPosition(i);
+                    //    float distance = Vector3.Distance(currentPointPos, mouseDownPos);
+                    //    if (distance < minDistance)
+                    //    {
+                    //        minDistance = distance;
+                           
+                    //    }
+                    //}
+                    spline.InsertPointAt(closestPointIndex, mouseDownPos);
+                    spline.SetPosition(closestPointIndex, mouseDownPos);
+                    inseretedPointIndex = closestPointIndex;
+                }
+            }
+        }
+        else
+        {
+            if (lastMinedBlock != null)
+            {
+                lastMinedBlock.OnStopMining();
+            }
+
+        }
+    }
+
+
+
+
 }
