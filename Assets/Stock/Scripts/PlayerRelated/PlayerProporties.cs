@@ -18,4 +18,6 @@ public class PlayerProporties : ScriptableObject
     public float movementSpeed;
     public float jumpForce;
     public float gravity;
+
+    public float timeToMineResources;
 }

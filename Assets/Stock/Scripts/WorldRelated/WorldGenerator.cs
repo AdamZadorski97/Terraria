@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
 {
 
     [SerializeField] private WorldParameters worldParameters;
-    [SerializeField] private Block blockPrefab;
-    [SerializeField] private List<BlockProporties>  blockProporties;
+    [SerializeField] private Tilemap tileMap;
+    [SerializeField] private Tile tile;
 
     private void Start()
     {
@@ -21,20 +22,10 @@ public class WorldGenerator : MonoBehaviour
         {
             for (int y = 0; y <= worldParameters.worldSize.y; y++)
             {
-                Block block = Instantiate(blockPrefab);
-                block.transform.position = new Vector2(x, y);
-                block.blockProporties = GetBlockProporties("Stone");
+                var tilePos = tileMap.WorldToCell(new Vector2(x,y));
+                tileMap.SetTile(tilePos, tile);
             }
         }
-    }
-    private BlockProporties GetBlockProporties(string name)
-    {
-        foreach(BlockProporties block in blockProporties)
-        {
-            if (block.name == name) return block;
-        }
-        Debug.Log($"No block with name {name}");
-        return null;
     }
 }
 

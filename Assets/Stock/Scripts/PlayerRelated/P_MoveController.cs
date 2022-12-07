@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.U2D;
-using InControl;
-using UnityEngine.Tilemaps;
 
-public class MoveController : MonoBehaviour
+public class P_MoveController : MonoBehaviour
 {
     public PlayerProporties playerProporties;
     [SerializeField] private LayerMask groundLayer;
@@ -33,7 +28,7 @@ public class MoveController : MonoBehaviour
         CheckInput();
         inputValue = InputController.Instance.MoveValue();
         rb.velocity = moveVector;
-        MouseInput();
+    
     }
     private void LateUpdate()
     {
@@ -107,35 +102,6 @@ public class MoveController : MonoBehaviour
             Jump();
         }
     }
-
-    private void MouseInput()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mRay.origin, Vector2.zero, Mathf.Infinity);
-            if (hit.collider != null)
-            {
-                if (hit.collider.GetComponent<TilemapCollider2D>())
-                {
-
-                    Tilemap tilemap = hit.collider.GetComponent<Tilemap>();
-                    var tilePos = tilemap.WorldToCell(hit.point);
-                    tilemap.SetTile(tilePos, null);
-
-                }
-            }
-        }
-        else
-        {
-            if (lastMinedBlock != null)
-            {
-                lastMinedBlock.OnStopMining();
-            }
-
-        }
-    }
-   
 }
 
 

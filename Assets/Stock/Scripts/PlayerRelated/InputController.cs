@@ -50,7 +50,7 @@ public class InputActions : PlayerActionSet
     public PlayerAction goDownAction;
     public PlayerAction jumpAction;
 
-
+    public PlayerAction mineAction;
     public InputActions()
     {
         goLeftAction = CreatePlayerAction("Go Left");
@@ -58,6 +58,7 @@ public class InputActions : PlayerActionSet
         goUpAction = CreatePlayerAction("Go Up");
         goDownAction = CreatePlayerAction("Go Down");
         jumpAction = CreatePlayerAction("Jump");
+        mineAction = CreatePlayerAction("Mine");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -81,6 +82,9 @@ public class InputActions : PlayerActionSet
        
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").key);
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").inputControlType);
+
+        playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").mouse);
+        playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").inputControlType);
 
         return playerActions;
     }

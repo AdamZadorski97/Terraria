@@ -24,5 +24,6 @@ public class Binding
 {
     public string name;
     public InputControlType inputControlType;
+    public Mouse mouse;
     public Key key;
 }
