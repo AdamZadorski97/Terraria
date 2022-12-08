@@ -20,4 +20,7 @@ public class PlayerProporties : ScriptableObject
     public float gravity;
 
     public float timeToMineResources;
+
+    public Vector2 lookOffset;
+    public float lookSpeed;
 }

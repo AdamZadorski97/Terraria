@@ -22,3 +22,5 @@ MonoBehaviour:
   jumpForce: 10
   gravity: 45
   timeToMineResources: 1
+  lookOffset: {x: 3, y: 3}
+  lookSpeed: 10

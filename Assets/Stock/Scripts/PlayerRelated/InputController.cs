@@ -26,6 +26,16 @@ public class InputController : MonoBehaviour
         return new Vector2(horizontalValue, verticalValue);
     }
 
+    public Vector2 LookValue()
+    {
+        float horizontalValue = Utility.ApplyDeadZone(Actions.lookAction.Value.x, minDeadzone, 1.0f) != 0 ? Mathf.Sign(Actions.lookAction.Value.x) : 0;
+        float verticalValue = Utility.ApplyDeadZone(Actions.lookAction.Value.y, minDeadzone, 1.0f) != 0 ? Mathf.Sign(Actions.lookAction.Value.y) : 0;
+        return new Vector2(horizontalValue, verticalValue);
+    }
+
+
+
+
     public InputActions Actions
     {
         get
@@ -42,12 +52,21 @@ public class InputController : MonoBehaviour
 public class InputActions : PlayerActionSet
 {
     public PlayerTwoAxisAction moveAction;
+    public PlayerTwoAxisAction lookAction;
 
     public PlayerAction goLeftAction;
     public PlayerAction goRightAction;
 
     public PlayerAction goUpAction;
     public PlayerAction goDownAction;
+
+    public PlayerAction lookLeftAction;
+    public PlayerAction lookRightAction;
+
+    public PlayerAction lookUpAction;
+    public PlayerAction lookDownAction;
+
+
     public PlayerAction jumpAction;
 
     public PlayerAction mineAction;
@@ -57,6 +76,12 @@ public class InputActions : PlayerActionSet
         goRightAction = CreatePlayerAction("Go Right");
         goUpAction = CreatePlayerAction("Go Up");
         goDownAction = CreatePlayerAction("Go Down");
+
+        lookLeftAction = CreatePlayerAction("Look Left");
+        lookRightAction = CreatePlayerAction("Look Right");
+        lookUpAction = CreatePlayerAction("Look Up");
+        lookDownAction = CreatePlayerAction("Look Down");
+
         jumpAction = CreatePlayerAction("Jump");
         mineAction = CreatePlayerAction("Mine");
     }
@@ -78,7 +103,23 @@ public class InputActions : PlayerActionSet
         playerActions.goDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Go Down").key);
         playerActions.goDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Go Down").inputControlType);
 
+
+
+        playerActions.lookLeftAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Left").key);
+        playerActions.lookLeftAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Left").inputControlType);
+
+        playerActions.lookRightAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Right").key);
+        playerActions.lookRightAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Right").inputControlType);
+
+        playerActions.lookUpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Up").key);
+        playerActions.lookUpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Up").inputControlType);
+
+        playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").key);
+        playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").inputControlType);
+
+
         playerActions.moveAction = playerActions.CreateTwoAxisPlayerAction(playerActions.goLeftAction, playerActions.goRightAction, playerActions.goDownAction, playerActions.goUpAction);
+        playerActions.lookAction = playerActions.CreateTwoAxisPlayerAction(playerActions.lookLeftAction, playerActions.lookRightAction, playerActions.lookDownAction, playerActions.lookUpAction);
        
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").key);
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").inputControlType);
