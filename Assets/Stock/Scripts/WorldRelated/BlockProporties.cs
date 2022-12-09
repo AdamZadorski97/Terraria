@@ -1,14 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "BlockProporties", menuName = "ScriptableObjects/BlockProporties", order = 1)]
 public class BlockProporties: ScriptableObject
 {
+    public List<Block> blocks;
+}
 
-    public string name;
-    public Sprite texture;
-    public List<Sprite> destroySprites;
+[Serializable]
+public class Block
+{
+    public string tileName;
+    public TileBase tileBase;
     public float timeToDestroy;
     public ParticleSystem destroyParticles;
-
 }

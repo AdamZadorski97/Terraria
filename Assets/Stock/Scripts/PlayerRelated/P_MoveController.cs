@@ -7,7 +7,6 @@ public class P_MoveController : MonoBehaviour
 
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
-    private Block lastMinedBlock;
     private Vector2 inputValue;
     private Vector2 moveVector;
  

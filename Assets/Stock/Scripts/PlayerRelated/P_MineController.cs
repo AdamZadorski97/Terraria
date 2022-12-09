@@ -6,7 +6,9 @@ using UnityEngine.Tilemaps;
 public class P_MineController : MonoBehaviour
 {
     [SerializeField] private PlayerProporties playerProporties;
+    [SerializeField] BlockProporties blockProporties;
     private float currentMiningTime;
+    private float miningTime = Mathf.Infinity;
 
     public void Update()
     {
@@ -24,8 +26,9 @@ public class P_MineController : MonoBehaviour
             if (GetMiningTilemap() != null)
             {
                 Tilemap tilemap = GetMiningTilemap();
+                miningTime = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).timeToDestroy;
                 currentMiningTime += Time.deltaTime;
-                if (currentMiningTime> playerProporties.timeToMineResources)
+                if (currentMiningTime > miningTime)
                 {
                     OnResourceMined(tilemap);
                 }
@@ -38,6 +41,7 @@ public class P_MineController : MonoBehaviour
         Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         return Physics2D.Raycast(mRay.origin, Vector2.zero, Mathf.Infinity);
     }
+
     private Tilemap GetMiningTilemap()
     {
         RaycastHit2D hit = GetMouseHit();
@@ -50,14 +54,28 @@ public class P_MineController : MonoBehaviour
         }
         return null;
     }
+
     private void OnStartMining()
     {
         currentMiningTime = 0;
     }
+
     private void OnResourceMined(Tilemap tilemap)
     {
         var tilePos = tilemap.WorldToCell(GetMouseHit().point);
         tilemap.SetTile(tilePos, null);
         currentMiningTime = 0;
+    }
+
+    private Block GetBlockProporties(TileBase tileBase)
+    {
+        foreach (Block block in blockProporties.blocks)
+        {
+            if (block.tileBase = tileBase)
+            {
+                return block;
+            }
+        }
+        return null;
     }
 }

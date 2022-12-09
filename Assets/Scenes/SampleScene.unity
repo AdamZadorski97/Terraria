@@ -2822,6 +2822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerProporties: {fileID: 11400000, guid: 532173e5b39221d4eb571a152378a410, type: 2}
+  blockProporties: {fileID: 11400000, guid: 422cba16a382f6245937c66511e72d3b, type: 2}
 --- !u!114 &1585043834
 MonoBehaviour:
   m_ObjectHideFlags: 0
