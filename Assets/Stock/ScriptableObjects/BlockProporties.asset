@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8809085f9061b4243a9bf6cebe575188, type: 3}
-  m_Name: BlocksProporties
+  m_Script: {fileID: 11500000, guid: b018be0c4819da643909d0e3c913d953, type: 3}
+  m_Name: BlockProporties
   m_EditorClassIdentifier: 
   blocks:
   - tileName: Stone
     tileBase: {fileID: 11400000, guid: 3ab2c4716fde6fe478ea505857e94e1d, type: 2}
-    timeToDestroy: 0.5
+    timeToDestroy: 1
     destroyParticles: {fileID: 0}

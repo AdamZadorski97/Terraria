@@ -7,7 +7,7 @@ using System;
 public class InputController : MonoBehaviour
 {
     public static InputController Instance { get; private set; }
-    [SerializeField] public BindingsScriptable bindingsScriptable;
+    private BindingProperties bindingProperties;
     [HideInInspector ] private InputActions actions;
     public float minDeadzone = .3f;
     public float maxDeadzone = 1;
@@ -89,7 +89,7 @@ public class InputActions : PlayerActionSet
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
     {
         var playerActions = new InputActions();
-        BindingsScriptable bindingsScriptable = InputController.Instance.bindingsScriptable;
+        BindingProperties bindingsScriptable  = ScriptableManager.Instance.bindingProperties;
 
         playerActions.goLeftAction.AddDefaultBinding(bindingsScriptable.GetBinding("Go Left").key);
         playerActions.goLeftAction.AddDefaultBinding(bindingsScriptable.GetBinding("Go Left").inputControlType);

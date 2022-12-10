@@ -5,15 +5,22 @@ using UnityEngine.Tilemaps;
 
 public class P_MineController : MonoBehaviour
 {
-    [SerializeField] private PlayerProporties playerProporties;
-    [SerializeField] BlockProporties blockProporties;
+    private PlayerProperties playerProporties;
+    private BlockProperties blockProporties;
     private float currentMiningTime;
     private float miningTime = Mathf.Infinity;
 
-    public void Update()
+    private void Start()
+    {
+        playerProporties = ScriptableManager.Instance.playerProperties;
+        blockProporties = ScriptableManager.Instance.blockProperties;
+    }
+
+    private void Update()
     {
         Mine();
     }
+
     private void Mine()
     {
         if (InputController.Instance.Actions.mineAction.WasPressed)

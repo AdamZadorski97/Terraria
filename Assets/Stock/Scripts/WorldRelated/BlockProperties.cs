@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "BlockProporties", menuName = "ScriptableObjects/BlockProporties", order = 1)]
-public class BlockProporties: ScriptableObject
+[CreateAssetMenu(fileName = "BlockProperties", menuName = "ScriptableObjects/BlockProperties", order = 1)]
+public class BlockProperties: ScriptableObject
 {
     public List<Block> blocks;
 }

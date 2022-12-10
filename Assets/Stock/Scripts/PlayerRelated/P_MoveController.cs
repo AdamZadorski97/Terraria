@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class P_MoveController : MonoBehaviour
 {
-    public PlayerProporties playerProporties;
+    private PlayerProperties playerProporties;
     [SerializeField] private LayerMask groundLayer;
 
     private Rigidbody2D rb;
@@ -14,6 +14,11 @@ public class P_MoveController : MonoBehaviour
     private void Awake()
     {
         IntializePlayer();
+    }
+
+    private void Start()
+    {
+        playerProporties = ScriptableManager.Instance.playerProperties;
     }
 
     private void IntializePlayer()

@@ -9,7 +9,7 @@ public class WorldGenerator : MonoBehaviour
 {
     const int mapConst = 8;
 
-    [SerializeField] private WorldParameters worldParameters;
+    [SerializeField] private WorldProperties worldParameters;
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile tile;
 
