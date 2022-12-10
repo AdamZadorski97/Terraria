@@ -29,19 +29,19 @@ MonoBehaviour:
     inputControlType: 2
     mouse: 0
     key: 54
-  - name: Look  Left
+  - name: Look Left
     inputControlType: 8
     mouse: 0
     key: 83
-  - name: Look  Right
+  - name: Look Right
     inputControlType: 8
     mouse: 0
     key: 84
-  - name: Look  Up
+  - name: Look Up
     inputControlType: 6
     mouse: 0
     key: 85
-  - name: Look  Down
+  - name: Look Down
     inputControlType: 7
     mouse: 0
     key: 86
