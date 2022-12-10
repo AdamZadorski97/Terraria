@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
 {
-    const int mapConst = 8;
+    const int mapConst = 5;
 
     [SerializeField] private WorldProperties worldParameters;
     [SerializeField] private Tilemap tileMap;
