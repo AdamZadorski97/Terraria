@@ -475,10 +475,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d65994deffdb144aac26bd3714e9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockProperties: {fileID: 0}
+  blockProperties: {fileID: 11400000, guid: b851874693551af4d9b5239b9f280c73, type: 2}
   playerProperties: {fileID: 11400000, guid: 532173e5b39221d4eb571a152378a410, type: 2}
-  worldProperties: {fileID: 0}
-  bindingProperties: {fileID: 0}
+  worldProperties: {fileID: 11400000, guid: b6bdc6c29d86e6c46a6f92a03184ea55, type: 2}
+  bindingProperties: {fileID: 11400000, guid: b1ddad4a15a95e9458495639021c70a3, type: 2}
 --- !u!4 &286866836
 Transform:
   m_ObjectHideFlags: 0
