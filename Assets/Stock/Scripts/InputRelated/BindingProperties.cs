@@ -5,7 +5,7 @@ using UnityEngine;
 using InControl;
 
 [CreateAssetMenu(fileName = "BindingProporties", menuName = "ScriptableObjects/BindingProporties", order = 1)]
-public class BindingsScriptable : ScriptableObject
+public class BindingProperties : ScriptableObject
 {
     public List<Binding> bindings;
 

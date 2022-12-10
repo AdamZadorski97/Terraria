@@ -10,7 +10,7 @@ public class WorldGenerator : MonoBehaviour
     int worldWidth = 100;
     int worldHeight = 100;
 
-    [SerializeField] private WorldParameters worldParameters;
+    [SerializeField] private WorldProperties worldParameters;
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile tile;
 

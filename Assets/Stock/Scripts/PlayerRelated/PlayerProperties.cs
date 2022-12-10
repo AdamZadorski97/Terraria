@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerProporties", menuName = "ScriptableObjects/PlayerProporties", order = 1)]
-public class PlayerProporties : ScriptableObject
+public class PlayerProperties : ScriptableObject
 {
     public float verticalAirboneSpeedLose;
     public float horizontalAirboneSpeedLose;

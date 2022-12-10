@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "BlockProporties", menuName = "ScriptableObjects/BlockProporties", order = 1)]
-public class BlockProporties: ScriptableObject
+public class BlockProperties: ScriptableObject
 {
     public List<Block> blocks;
 }

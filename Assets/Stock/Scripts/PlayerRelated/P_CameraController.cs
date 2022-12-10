@@ -5,9 +5,11 @@ public class P_CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     private CinemachineFramingTransposer cinemachineFramingTransposer;
-    [SerializeField] private PlayerProporties playerProporties;
+    private PlayerProperties playerProporties;
+
     private void Start()
     {
+        playerProporties = ScriptableManager.Instance.playerProperties;
         IntializeCamera();
     }
 
