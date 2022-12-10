@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerProporties", menuName = "ScriptableObjects/PlayerProporties", order = 1)]
+[CreateAssetMenu(fileName = "PlayerProperties", menuName = "ScriptableObjects/PlayerProperties", order = 1)]
 public class PlayerProperties : ScriptableObject
 {
     public float verticalAirboneSpeedLose;

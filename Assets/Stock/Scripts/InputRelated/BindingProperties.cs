@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using InControl;
 
-[CreateAssetMenu(fileName = "BindingProporties", menuName = "ScriptableObjects/BindingProporties", order = 1)]
+[CreateAssetMenu(fileName = "BindingProperites", menuName = "ScriptableObjects/BindingProporties", order = 1)]
 public class BindingProperties : ScriptableObject
 {
     public List<Binding> bindings;
