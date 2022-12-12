@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a189763929ca3241954aa4033bdfcc2, type: 3}
-  m_Name: PlayerProporties
+  m_Name: PlayerProperties
   m_EditorClassIdentifier: 
   verticalAirboneSpeedLose: 1
   horizontalAirboneSpeedLose: 5
@@ -19,8 +19,11 @@ MonoBehaviour:
   groundedSpeedLose: 15
   maxGroundedSpeed: 10
   movementSpeed: 10
+  runSpeed: 5
   jumpForce: 10
   gravity: 45
   timeToMineResources: 1
+  oxygenLoseFrequency: 1
+  oxygenLoseValue: 0.1
   lookOffset: {x: 3, y: 3}
   lookSpeed: 10

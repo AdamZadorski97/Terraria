@@ -16,10 +16,14 @@ public class PlayerProperties : ScriptableObject
     public float groundedSpeedLose;
     public float maxGroundedSpeed;
     public float movementSpeed;
+    public float runSpeed;
     public float jumpForce;
     public float gravity;
 
     public float timeToMineResources;
+
+    public float oxygenLoseFrequency = 0.25f;
+    public float oxygenLoseValue = 0.1f;
 
     public Vector2 lookOffset;
     public float lookSpeed;

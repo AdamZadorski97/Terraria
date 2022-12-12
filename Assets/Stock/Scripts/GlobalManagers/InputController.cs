@@ -68,6 +68,7 @@ public class InputActions : PlayerActionSet
 
 
     public PlayerAction jumpAction;
+    public PlayerAction runAction;
 
     public PlayerAction mineAction;
     public InputActions()
@@ -82,7 +83,10 @@ public class InputActions : PlayerActionSet
         lookUpAction = CreatePlayerAction("Look Up");
         lookDownAction = CreatePlayerAction("Look Down");
 
+      
         jumpAction = CreatePlayerAction("Jump");
+        runAction = CreatePlayerAction("Run");
+
         mineAction = CreatePlayerAction("Mine");
     }
 
@@ -123,6 +127,9 @@ public class InputActions : PlayerActionSet
        
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").key);
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").inputControlType);
+
+        playerActions.runAction.AddDefaultBinding(bindingsScriptable.GetBinding("Run").key);
+        playerActions.runAction.AddDefaultBinding(bindingsScriptable.GetBinding("Run").inputControlType);
 
         playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").mouse);
         playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").inputControlType);

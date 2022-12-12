@@ -9,7 +9,8 @@ public class P_MoveController : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
     private Vector2 inputValue;
     private Vector2 moveVector;
- 
+    private float runSpeedValue;
+
 
     private void Awake()
     {
@@ -29,10 +30,10 @@ public class P_MoveController : MonoBehaviour
 
     private void Update()
     {
-        CheckInput();
+        CheckJump();
+        CheckRun();
         inputValue = InputController.Instance.MoveValue();
         rb.velocity = moveVector;
-    
     }
     private void LateUpdate()
     {
@@ -47,7 +48,7 @@ public class P_MoveController : MonoBehaviour
         {
             if (inputValue != Vector2.zero)
             {
-                moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * playerProporties.maxGroundedSpeed, moveVector.y), Time.deltaTime * playerProporties.horizontalGroundedAcceleration);
+                moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * (playerProporties.maxGroundedSpeed + runSpeedValue) , moveVector.y), Time.deltaTime * playerProporties.horizontalGroundedAcceleration);
             }
             else
             {
@@ -79,7 +80,7 @@ public class P_MoveController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x/1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
+        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
         Vector2 direction = Vector2.right;
         float distance = capsuleCollider.size.x / 1.5f;
 
@@ -92,19 +93,36 @@ public class P_MoveController : MonoBehaviour
         return false;
     }
 
-    private void Jump()
+
+    private void CheckRun()
     {
-        if (!IsGrounded()) return;
-        transform.position += new Vector3(0, 0.1f, 0);
-        moveVector = new Vector2(moveVector.x, playerProporties.jumpForce);
+        if (!InputController.Instance.Actions.runAction.IsPressed)
+        {
+            runSpeedValue = 0;
+            return;
+        }
+
+        if (!IsGrounded())
+        {
+            runSpeedValue = 0;
+            return;
+        }
+        runSpeedValue = playerProporties.runSpeed;
     }
 
-    private void CheckInput()
+    private void CheckJump()
     {
-        if (InputController.Instance.Actions.jumpAction.WasPressed)
+        if (!InputController.Instance.Actions.jumpAction.WasPressed)
         {
-            Jump();
+            return;
         }
+
+        if (!IsGrounded())
+        {
+            return;
+        }
+        transform.position += new Vector3(0, 0.1f, 0);
+        moveVector = new Vector2(moveVector.x, playerProporties.jumpForce);
     }
 }
 
