@@ -256,7 +256,7 @@ namespace InControl
 
 		public float Value
 		{
-			get { return EnabledInHierarchy ? thisState.Value : 0.0f; }
+			get { return EnabledInHierarchy ? thisState.Value : 0.000f; }
 		}
 
 

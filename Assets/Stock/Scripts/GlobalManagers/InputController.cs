@@ -33,7 +33,10 @@ public class InputController : MonoBehaviour
         return new Vector2(horizontalValue, verticalValue);
     }
 
-
+    public float ZoomValue()
+    {
+       return Actions.zoomAction.Value;
+    }
 
 
     public InputActions Actions
@@ -53,6 +56,9 @@ public class InputActions : PlayerActionSet
 {
     public PlayerTwoAxisAction moveAction;
     public PlayerTwoAxisAction lookAction;
+    public PlayerOneAxisAction zoomAction;
+
+
 
     public PlayerAction goLeftAction;
     public PlayerAction goRightAction;
@@ -65,6 +71,9 @@ public class InputActions : PlayerActionSet
 
     public PlayerAction lookUpAction;
     public PlayerAction lookDownAction;
+
+    public PlayerAction zoomInAction;
+    public PlayerAction zoomOutAction;
 
 
     public PlayerAction jumpAction;
@@ -82,8 +91,10 @@ public class InputActions : PlayerActionSet
         lookRightAction = CreatePlayerAction("Look Right");
         lookUpAction = CreatePlayerAction("Look Up");
         lookDownAction = CreatePlayerAction("Look Down");
+       
+        zoomInAction = CreatePlayerAction("Zoom In");
+        zoomOutAction = CreatePlayerAction("Zoom Out");
 
-      
         jumpAction = CreatePlayerAction("Jump");
         runAction = CreatePlayerAction("Run");
 
@@ -121,10 +132,17 @@ public class InputActions : PlayerActionSet
         playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").key);
         playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").inputControlType);
 
+        playerActions.zoomInAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom In").mouse);
+        playerActions.zoomInAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom In").inputControlType);
+
+        playerActions.zoomOutAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom Out").mouse);
+        playerActions.zoomOutAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom Out").inputControlType);
 
         playerActions.moveAction = playerActions.CreateTwoAxisPlayerAction(playerActions.goLeftAction, playerActions.goRightAction, playerActions.goDownAction, playerActions.goUpAction);
         playerActions.lookAction = playerActions.CreateTwoAxisPlayerAction(playerActions.lookLeftAction, playerActions.lookRightAction, playerActions.lookDownAction, playerActions.lookUpAction);
-       
+        playerActions.zoomAction = playerActions.CreateOneAxisPlayerAction(playerActions.zoomInAction, playerActions.zoomOutAction);
+
+
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").key);
         playerActions.jumpAction.AddDefaultBinding(bindingsScriptable.GetBinding("Jump").inputControlType);
 

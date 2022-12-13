@@ -34,7 +34,7 @@ MonoBehaviour:
     mouse: 0
     key: 83
   - name: Look Right
-    inputControlType: 8
+    inputControlType: 9
     mouse: 0
     key: 84
   - name: Look Up
@@ -56,4 +56,12 @@ MonoBehaviour:
   - name: Mine
     inputControlType: 20
     mouse: 2
+    key: 0
+  - name: Zoom In
+    inputControlType: 11
+    mouse: 8
+    key: 0
+  - name: Zoom Out
+    inputControlType: 12
+    mouse: 9
     key: 0
