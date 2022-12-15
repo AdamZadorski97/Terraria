@@ -6,7 +6,7 @@ public class P_CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     private CinemachineFramingTransposer cinemachineFramingTransposer;
     private PlayerProperties playerProporties;
-    private float currentZoom;
+    private float currentZoom = 10;
 
     private void Start()
     {

@@ -1,3 +1,4 @@
+using FunkyCode;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class P_MineController : MonoBehaviour
 {
+    public LightTilemapCollider2D lightTilemapCollider2D;
     private PlayerProperties playerProporties;
     private BlockProperties blockProporties;
     private float currentMiningTime;
@@ -56,6 +58,7 @@ public class P_MineController : MonoBehaviour
         {
             if (hit.collider.GetComponent<TilemapCollider2D>())
             {
+                Debug.Log(hit.collider);
                 return hit.collider.GetComponent<Tilemap>();
             }
         }
@@ -69,9 +72,20 @@ public class P_MineController : MonoBehaviour
 
     private void OnResourceMined(Tilemap tilemap)
     {
+  
         var tilePos = tilemap.WorldToCell(GetMouseHit().point);
         tilemap.SetTile(tilePos, null);
+        lightTilemapCollider2D.Initialize();
+        Light2D.ForceUpdateAll();
+        LightingManager2D.ForceUpdate();
         currentMiningTime = 0;
+        
+    }
+
+    IEnumerator UpdateLight()
+    {
+        yield return new WaitForSeconds(0.01f);
+      
     }
 
     private Block GetBlockProporties(TileBase tileBase)
