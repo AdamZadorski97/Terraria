@@ -15,12 +15,11 @@ MonoBehaviour:
   verticalAirboneSpeedLose: 1
   horizontalAirboneSpeedLose: 5
   horizontalGroundedAcceleration: 2
-  maxHorizontalAirboneSpeed: 8
+  maxHorizontalAirboneSpeed: 10
   groundedSpeedLose: 15
   maxGroundedSpeed: 10
-  movementSpeed: 10
   runSpeed: 5
-  jumpForce: 10
+  jumpForce: 12
   gravity: 45
   timeToMineResources: 1
   oxygenLoseFrequency: 1

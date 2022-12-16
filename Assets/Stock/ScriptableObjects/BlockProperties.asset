@@ -15,5 +15,5 @@ MonoBehaviour:
   blocks:
   - tileName: Dirt
     tileBase: {fileID: 11400000, guid: 5a59e806e31c2f64ba4084929a30b850, type: 2}
-    timeToDestroy: 1
+    timeToDestroy: 0.25
     destroyParticles: {fileID: 0}

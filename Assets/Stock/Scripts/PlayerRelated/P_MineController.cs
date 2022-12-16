@@ -11,6 +11,7 @@ public class P_MineController : MonoBehaviour
     public GameObject minedSprite;
     private PlayerProperties playerProporties;
     private BlockProperties blockProporties;
+    private P_Sounds p_Sounds;
     private float currentMiningTime;
     private float miningTime = Mathf.Infinity;
     private Vector3Int currentMinePosition;
@@ -18,6 +19,7 @@ public class P_MineController : MonoBehaviour
     {
         playerProporties = ScriptableManager.Instance.playerProperties;
         blockProporties = ScriptableManager.Instance.blockProperties;
+        p_Sounds = GetComponent<P_Sounds>();
     }
 
     private void Update()
@@ -98,6 +100,7 @@ public class P_MineController : MonoBehaviour
 
     private void OnResourceMined(Tilemap tilemap)
     {
+        p_Sounds.PlaySound("ResourceMined");
         miningParticles.Stop();
         var tilePos = tilemap.WorldToCell(GetMouseHit().point);
         SetupMinedResource(tilemap);
@@ -116,9 +119,13 @@ public class P_MineController : MonoBehaviour
         minedSprite.transform.localScale = Vector3.one * 0.8f;
         minedSprite.transform.position = tilemap.WorldToCell(GetMouseHit().point);
         minedSprite.transform.DOJump(transform.position, 1, 1, 0.5f);
-        minedSprite.transform.DOScale(Vector3.one * 0.2f, 0.5f).OnComplete(() => minedSprite.gameObject.SetActive(false));
+        minedSprite.transform.DOScale(Vector3.one * 0.2f, 0.5f).OnComplete(() => OnPickup());
     }
-
+    private void OnPickup()
+    {
+        minedSprite.gameObject.SetActive(false);
+        p_Sounds.PlaySound("ResourcePickup");
+    }
     IEnumerator UpdateLight()
     {
         yield return new WaitForSeconds(0.01f);

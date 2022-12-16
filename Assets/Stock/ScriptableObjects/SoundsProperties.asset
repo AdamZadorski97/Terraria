@@ -23,3 +23,12 @@ MonoBehaviour:
   - name: DoubleJump
     variants:
     - {fileID: 8300000, guid: c45d167390eb3db40a0c75273dc31c83, type: 3}
+  - name: JumpEnd
+    variants:
+    - {fileID: 8300000, guid: f45d1aa5d51a26e4b8df746bd6d278cc, type: 3}
+  - name: ResourceMined
+    variants:
+    - {fileID: 8300000, guid: 391a2c5a7fe5dc744958b604c6b8e38b, type: 3}
+  - name: ResourcePickup
+    variants:
+    - {fileID: 8300000, guid: 9cf75284b050ecc4599d69fc93e7a41f, type: 3}
