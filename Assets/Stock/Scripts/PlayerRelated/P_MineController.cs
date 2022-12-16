@@ -13,7 +13,7 @@ public class P_MineController : MonoBehaviour
     private BlockProperties blockProporties;
     private float currentMiningTime;
     private float miningTime = Mathf.Infinity;
-
+    private Vector3Int currentMinePosition;
     private void Start()
     {
         playerProporties = ScriptableManager.Instance.playerProperties;
@@ -37,28 +37,23 @@ public class P_MineController : MonoBehaviour
             if (GetMiningTilemap() != null)
             {
                 Tilemap tilemap = GetMiningTilemap();
-                miningTime = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).timeToDestroy;
-                var sprite = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).tileBase;
+
+                if (currentMinePosition != tilemap.WorldToCell(GetMouseHit().point))
+                {
+                    currentMinePosition = tilemap.WorldToCell(GetMouseHit().point);
+                    miningParticles.Play();
+                    currentMiningTime = 0;
+                }
+                miningTime = GetBlockProporties(tilemap.GetTile(currentMinePosition)).timeToDestroy;
                 miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 1.1f, 0);
-
-                if(miningParticles.isStopped)
-                {
-                    miningParticles.Play();
-                }
-
-                if(!miningParticles.isPlaying)
-                {
-                    miningParticles.Play();
-                }
-                
 
                 currentMiningTime += Time.deltaTime;
                 if (currentMiningTime > miningTime)
                 {
-
-
                     OnResourceMined(tilemap);
                 }
+
+
             }
             else
             {
@@ -92,6 +87,7 @@ public class P_MineController : MonoBehaviour
 
     private void OnStartMining()
     {
+        miningParticles.Play();
         currentMiningTime = 0;
     }
     private void OnStopMining()
