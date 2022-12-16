@@ -23,11 +23,15 @@ public class P_Stats : MonoBehaviour
         playerProperties = ScriptableManager.Instance.playerProperties;
         oxygenLoseFrequency = playerProperties.oxygenLoseFrequency;
         oxygenLoseValue = playerProperties.oxygenLoseValue;
+
+        healthLoseFrequency = playerProperties.healthLoseFrequency;
+        healthLoseValue = playerProperties.healthLoseValue;
     }
 
 
     public void Update()
     {
+        if(!isDeath)
         LoseOxygen();
     }
 
@@ -50,15 +54,19 @@ public class P_Stats : MonoBehaviour
 
             if (Oxygen <= 0)
             {
-                Health -= 0.1f;
-                LoseHealth();
+
             }
         }
     }
 
     private void OnOxygenEmpty()
     {
-
+        healthLosetime += Time.deltaTime;
+        if (healthLosetime > healthLoseFrequency)
+        {
+            healthLosetime = 0;
+            Health -= healthLoseValue;
+        }
     }
 
     private void LoseHealth()
@@ -67,7 +75,7 @@ public class P_Stats : MonoBehaviour
             return;
         if (m_health <= 0)
         {
-            Death();
+        
         }
     }
 
@@ -75,7 +83,7 @@ public class P_Stats : MonoBehaviour
 
     public void Death()
     {
-        Debug.Log(isDeath);
+        isDeath = true;
     }
 
 
@@ -87,6 +95,10 @@ public class P_Stats : MonoBehaviour
         {
             m_health = value;
             UserInterfaceController.Instance.UpdateHealthBar(value);
+            if (value <=0)
+            {
+                Death();
+            }
         }
     }
 

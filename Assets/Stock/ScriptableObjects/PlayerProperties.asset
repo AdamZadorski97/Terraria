@@ -25,6 +25,8 @@ MonoBehaviour:
   timeToMineResources: 1
   oxygenLoseFrequency: 1
   oxygenLoseValue: 0.1
+  healthLoseFrequency: 1
+  healthLoseValue: 0.1
   zoomMinMax: {x: 10, y: 20}
   zoomSpeed: 1
   lookOffset: {x: 3, y: 3}

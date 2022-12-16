@@ -25,6 +25,9 @@ public class PlayerProperties : ScriptableObject
     public float oxygenLoseFrequency = 0.25f;
     public float oxygenLoseValue = 0.1f;
 
+    public float healthLoseFrequency;
+    public float healthLoseValue;
+
     public Vector2 zoomMinMax;
     public float zoomSpeed;
     public Vector2 lookOffset;
