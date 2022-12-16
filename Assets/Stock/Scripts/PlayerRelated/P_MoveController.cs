@@ -123,7 +123,6 @@ public class P_MoveController : MonoBehaviour
             Debug.Log("Hit");
             return true;
         }
-
         return false;
     }
 

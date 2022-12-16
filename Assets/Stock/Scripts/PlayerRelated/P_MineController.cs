@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class P_MineController : MonoBehaviour
 {
     public LightTilemapCollider2D lightTilemapCollider2D;
+    public ParticleSystem miningParticles;
     private PlayerProperties playerProporties;
     private BlockProperties blockProporties;
     private float currentMiningTime;
@@ -36,12 +37,20 @@ public class P_MineController : MonoBehaviour
             {
                 Tilemap tilemap = GetMiningTilemap();
                 miningTime = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).timeToDestroy;
+                miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f,1.1f,0);
+                if(miningParticles.isPlaying==false)
+                miningParticles.Play();
                 currentMiningTime += Time.deltaTime;
                 if (currentMiningTime > miningTime)
                 {
+                   
                     OnResourceMined(tilemap);
                 }
             }
+        }
+        if(InputController.Instance.Actions.mineAction.WasReleased)
+        {
+            OnStopMining();
         }
     }
 
@@ -59,6 +68,7 @@ public class P_MineController : MonoBehaviour
             if (hit.collider.GetComponent<TilemapCollider2D>())
             {
                 Debug.Log(hit.collider);
+          
                 return hit.collider.GetComponent<Tilemap>();
             }
         }
@@ -67,19 +77,27 @@ public class P_MineController : MonoBehaviour
 
     private void OnStartMining()
     {
+      
+        miningParticles.gameObject.SetActive(true);
+        miningParticles.Play();
+        currentMiningTime = 0;
+    }
+    private void OnStopMining()
+    {
+        miningParticles.Stop();
         currentMiningTime = 0;
     }
 
     private void OnResourceMined(Tilemap tilemap)
     {
-  
+        Debug.Log("Stop");
         var tilePos = tilemap.WorldToCell(GetMouseHit().point);
         tilemap.SetTile(tilePos, null);
         lightTilemapCollider2D.Initialize();
         Light2D.ForceUpdateAll();
         LightingManager2D.ForceUpdate();
         currentMiningTime = 0;
-        
+    
     }
 
     IEnumerator UpdateLight()
