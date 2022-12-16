@@ -27,5 +27,4 @@ public class UserInterfaceController : MonoBehaviour
     {
         oxygenBar.DOValue(value, 0.5f);
     }
-
 }
