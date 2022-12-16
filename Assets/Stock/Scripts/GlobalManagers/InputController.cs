@@ -80,6 +80,7 @@ public class InputActions : PlayerActionSet
     public PlayerAction runAction;
 
     public PlayerAction mineAction;
+    public PlayerAction buildAction;
     public InputActions()
     {
         goLeftAction = CreatePlayerAction("Go Left");
@@ -99,6 +100,7 @@ public class InputActions : PlayerActionSet
         runAction = CreatePlayerAction("Run");
 
         mineAction = CreatePlayerAction("Mine");
+        buildAction = CreatePlayerAction("Build");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -152,6 +154,8 @@ public class InputActions : PlayerActionSet
         playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").mouse);
         playerActions.mineAction.AddDefaultBinding(bindingsScriptable.GetBinding("Mine").inputControlType);
 
+        playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").mouse);
+        playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").inputControlType);
         return playerActions;
     }
 }
