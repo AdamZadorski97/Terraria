@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlockProperties
   m_EditorClassIdentifier: 
   blocks:
-  - tileName: Stone
-    tileBase: {fileID: 11400000, guid: 3ab2c4716fde6fe478ea505857e94e1d, type: 2}
+  - tileName: Dirt
+    tileBase: {fileID: 11400000, guid: 5a59e806e31c2f64ba4084929a30b850, type: 2}
     timeToDestroy: 1
     destroyParticles: {fileID: 0}

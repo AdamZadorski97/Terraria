@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using DG.Tweening;
 public class P_MineController : MonoBehaviour
 {
     public LightTilemapCollider2D lightTilemapCollider2D;
     public ParticleSystem miningParticles;
+    public GameObject minedSprite;
     private PlayerProperties playerProporties;
     private BlockProperties blockProporties;
     private float currentMiningTime;
@@ -37,18 +38,34 @@ public class P_MineController : MonoBehaviour
             {
                 Tilemap tilemap = GetMiningTilemap();
                 miningTime = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).timeToDestroy;
-                miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f,1.1f,0);
-                if(miningParticles.isPlaying==false)
-                miningParticles.Play();
+                var sprite = GetBlockProporties(tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point))).tileBase;
+                miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 1.1f, 0);
+
+                if(miningParticles.isStopped)
+                {
+                    miningParticles.Play();
+                }
+
+                if(!miningParticles.isPlaying)
+                {
+                    miningParticles.Play();
+                }
+                
+
                 currentMiningTime += Time.deltaTime;
                 if (currentMiningTime > miningTime)
                 {
-                   
+
+
                     OnResourceMined(tilemap);
                 }
             }
+            else
+            {
+                miningParticles.Stop();
+            }
         }
-        if(InputController.Instance.Actions.mineAction.WasReleased)
+        if (InputController.Instance.Actions.mineAction.WasReleased)
         {
             OnStopMining();
         }
@@ -67,8 +84,6 @@ public class P_MineController : MonoBehaviour
         {
             if (hit.collider.GetComponent<TilemapCollider2D>())
             {
-                Debug.Log(hit.collider);
-          
                 return hit.collider.GetComponent<Tilemap>();
             }
         }
@@ -77,9 +92,6 @@ public class P_MineController : MonoBehaviour
 
     private void OnStartMining()
     {
-      
-        miningParticles.gameObject.SetActive(true);
-        miningParticles.Play();
         currentMiningTime = 0;
     }
     private void OnStopMining()
@@ -90,20 +102,31 @@ public class P_MineController : MonoBehaviour
 
     private void OnResourceMined(Tilemap tilemap)
     {
-        Debug.Log("Stop");
+        miningParticles.Stop();
         var tilePos = tilemap.WorldToCell(GetMouseHit().point);
+        SetupMinedResource(tilemap);
         tilemap.SetTile(tilePos, null);
         lightTilemapCollider2D.Initialize();
         Light2D.ForceUpdateAll();
         LightingManager2D.ForceUpdate();
         currentMiningTime = 0;
-    
+
+    }
+
+    private void SetupMinedResource(Tilemap tilemap)
+    {
+        minedSprite.gameObject.SetActive(true);
+        minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
+        minedSprite.transform.localScale = Vector3.one * 0.8f;
+        minedSprite.transform.position = tilemap.WorldToCell(GetMouseHit().point);
+        minedSprite.transform.DOJump(transform.position, 1, 1, 0.5f);
+        minedSprite.transform.DOScale(Vector3.one * 0.2f, 0.5f).OnComplete(() => minedSprite.gameObject.SetActive(false));
     }
 
     IEnumerator UpdateLight()
     {
         yield return new WaitForSeconds(0.01f);
-      
+
     }
 
     private Block GetBlockProporties(TileBase tileBase)

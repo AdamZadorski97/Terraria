@@ -15,7 +15,7 @@ MonoBehaviour:
   verticalAirboneSpeedLose: 1
   horizontalAirboneSpeedLose: 5
   horizontalGroundedAcceleration: 2
-  maxHorizontalAirboneSpeed: 5
+  maxHorizontalAirboneSpeed: 8
   groundedSpeedLose: 15
   maxGroundedSpeed: 10
   movementSpeed: 10
