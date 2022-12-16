@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a10a1b6e9ae2dba41bc3456cc6368fec, type: 3}
+  m_Name: SoundsProperties
+  m_EditorClassIdentifier: 
+  Sounds:
+  - name: GrassFootStep
+    variants:
+    - {fileID: 8300000, guid: e0df74269684c6044a0b8f748510014e, type: 3}
+    - {fileID: 8300000, guid: 0046388756a25cb43a6c35baccb6ef7d, type: 3}
+  - name: Jump
+    variants:
+    - {fileID: 8300000, guid: 5bdabfb02de0d244da620e468d87f821, type: 3}
+  - name: DoubleJump
+    variants:
+    - {fileID: 8300000, guid: c45d167390eb3db40a0c75273dc31c83, type: 3}

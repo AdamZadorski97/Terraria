@@ -30,4 +30,6 @@ public class PlayerProperties : ScriptableObject
     public Vector2 lookOffset;
     public float lookSpeed;
 
+    public float footStepRate;
+
 }

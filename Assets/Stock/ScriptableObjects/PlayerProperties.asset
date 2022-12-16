@@ -29,3 +29,4 @@ MonoBehaviour:
   zoomSpeed: 1
   lookOffset: {x: 3, y: 3}
   lookSpeed: 10
+  footStepRate: 0.15

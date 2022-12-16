@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_MoveController : MonoBehaviour
 {
+    private P_Sounds p_Sounds;
     private PlayerProperties playerProporties;
     [SerializeField] private LayerMask groundLayer;
 
@@ -26,6 +27,7 @@ public class P_MoveController : MonoBehaviour
     {
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        p_Sounds = GetComponent<P_Sounds>();
     }
 
     private void Update()
@@ -73,6 +75,7 @@ public class P_MoveController : MonoBehaviour
             {
                 moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * playerProporties.maxGroundedSpeed, moveVector.y), Time.deltaTime * playerProporties.groundedSpeedLose);
             }
+            if (moveVector.x > 0.1f || moveVector.x < -0.1f) p_Sounds.FootStep(moveVector.x);
         }
     }
 
@@ -98,7 +101,7 @@ public class P_MoveController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
+        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.025f, 0);
         Vector2 direction = Vector2.right;
         float distance = capsuleCollider.size.x / 1.5f;
         
@@ -152,6 +155,10 @@ public class P_MoveController : MonoBehaviour
         {
             return;
         }
+        if(jumpsCount==0)
+        p_Sounds.PlaySound("Jump");
+        else
+            p_Sounds.PlaySound("DoubleJump");
         jumpsCount++;
         transform.position += new Vector3(0, 0.1f, 0);
         moveVector = new Vector2(moveVector.x, playerProporties.jumpForce);
