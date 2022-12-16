@@ -65,3 +65,7 @@ MonoBehaviour:
     inputControlType: 12
     mouse: 9
     key: 0
+  - name: Build
+    inputControlType: 0
+    mouse: 1
+    key: 0

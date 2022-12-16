@@ -15,6 +15,8 @@ public class P_MineController : MonoBehaviour
     private float currentMiningTime;
     private float miningTime = Mathf.Infinity;
     private Vector3Int currentMinePosition;
+
+    [SerializeField]private LayerMask objectMask;
     private void Start()
     {
         playerProporties = ScriptableManager.Instance.playerProperties;
@@ -112,8 +114,18 @@ public class P_MineController : MonoBehaviour
 
     }
 
+    private void CheckIsOnUp(Vector3 checkPosition)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.up, 1, objectMask);
+        if (hit.collider != null)
+        {
+            Destroy(hit.transform.gameObject);
+        }
+    }
+
     private void SetupMinedResource(Tilemap tilemap)
     {
+        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.transform.localScale = Vector3.one * 0.8f;
