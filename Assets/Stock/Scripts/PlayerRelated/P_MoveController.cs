@@ -10,7 +10,7 @@ public class P_MoveController : MonoBehaviour
     private Vector2 inputValue;
     private Vector2 moveVector;
     private float runSpeedValue;
-
+    private float jumpsCount;
 
     private void Awake()
     {
@@ -37,8 +37,27 @@ public class P_MoveController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        HorizontalAirboneMovement();
+        Movement();
+    }
+
+    private void SetFacing(float value)
+    {
+        transform.localScale = new Vector3(value, 1, 1);
+    }
+
+    private void Movement()
+    {
         VerticalAirboneMovement();
+
+        if (inputValue.x != 0) SetFacing(inputValue.x);
+
+        if (inputValue.x < 0 && CheckWall(Vector2.left) || inputValue.x > 0 && CheckWall(Vector2.right))
+        {
+            moveVector = new Vector2(0, moveVector.y);
+            return;
+        }
+
+        HorizontalAirboneMovement();
         HorizontalGroundedMovement();
     }
 
@@ -48,7 +67,7 @@ public class P_MoveController : MonoBehaviour
         {
             if (inputValue != Vector2.zero)
             {
-                moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * (playerProporties.maxGroundedSpeed + runSpeedValue) , moveVector.y), Time.deltaTime * playerProporties.horizontalGroundedAcceleration);
+                moveVector = Vector2.Lerp(moveVector, new Vector2(inputValue.x * (playerProporties.maxGroundedSpeed + runSpeedValue), moveVector.y), Time.deltaTime * playerProporties.horizontalGroundedAcceleration);
             }
             else
             {
@@ -83,10 +102,25 @@ public class P_MoveController : MonoBehaviour
         Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
         Vector2 direction = Vector2.right;
         float distance = capsuleCollider.size.x / 1.5f;
-
+        
         RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
         if (hit.collider != null)
         {
+            jumpsCount = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CheckWall(Vector2 direction)
+    {
+        Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(0, capsuleCollider.size.y / 2) + new Vector3(0, 0.03f, 0);
+        float distance = (capsuleCollider.size.x / 2f) + 0.25f;
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
+        if (hit.collider != null)
+        {
+            Debug.Log("Hit");
             return true;
         }
 
@@ -117,10 +151,11 @@ public class P_MoveController : MonoBehaviour
             return;
         }
 
-        if (!IsGrounded())
+        if (!IsGrounded() && jumpsCount > 1)
         {
             return;
         }
+        jumpsCount++;
         transform.position += new Vector3(0, 0.1f, 0);
         moveVector = new Vector2(moveVector.x, playerProporties.jumpForce);
     }
