@@ -7,8 +7,8 @@ public class UserInterfaceController : MonoBehaviour
 {
     public static UserInterfaceController Instance { get; private set; }
 
-    [SerializeField] private Slider healthBar;
-    [SerializeField] private Slider oxygenBar;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Image oxygenBar;
     [SerializeField] private List<EQBoxController> eQBoxControllers;
     private P_Sounds p_Sounds;
     private int currenteQBoxSelected;
@@ -77,11 +77,11 @@ public class UserInterfaceController : MonoBehaviour
 
     public void UpdateHealthBar(float value)
     {
-        healthBar.DOValue(value, 0.5f);
+        healthBar.DOFillAmount(value, 0.5f);
     }
 
     public void UpdateOxygenBar(float value)
     {
-        oxygenBar.DOValue(value, 0.5f);
+        oxygenBar.DOFillAmount(value, 0.5f);
     }
 }

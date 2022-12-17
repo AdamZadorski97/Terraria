@@ -335,6 +335,9 @@ MonoBehaviour:
   lightTilemapCollider2D: {fileID: 0}
   miningParticles: {fileID: 1468547934973624278}
   minedSprite: {fileID: 3039515206662416435}
+  objectMask:
+    serializedVersion: 2
+    m_Bits: 2147483648
 --- !u!114 &3039515206753170131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef33356f610a87f4bb68e341a960b2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footStep: {fileID: 8300000, guid: e0df74269684c6044a0b8f748510014e, type: 3}
 --- !u!114 &3239847314560590897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +388,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToBuild: {fileID: 6773774358097145477, guid: 49e91fca65a9f8e4fbfc613fa2b0be95, type: 3}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &3039515206753170142
 Rigidbody2D:
   serializedVersion: 4
