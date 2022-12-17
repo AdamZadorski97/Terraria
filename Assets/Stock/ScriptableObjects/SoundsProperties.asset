@@ -32,3 +32,6 @@ MonoBehaviour:
   - name: ResourcePickup
     variants:
     - {fileID: 8300000, guid: 9cf75284b050ecc4599d69fc93e7a41f, type: 3}
+  - name: EQScroll
+    variants:
+    - {fileID: 8300000, guid: e0b43ea597c9967419b57e983d1379b2, type: 3}

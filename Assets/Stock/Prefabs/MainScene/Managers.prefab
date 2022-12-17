@@ -81,3 +81,4 @@ MonoBehaviour:
   soundsProperties: {fileID: 11400000, guid: b48280ecaa813a5498c7c3998c3a2fff, type: 2}
   worldProperties: {fileID: 11400000, guid: b6bdc6c29d86e6c46a6f92a03184ea55, type: 2}
   bindingProperties: {fileID: 11400000, guid: b1ddad4a15a95e9458495639021c70a3, type: 2}
+  userInterfaceProperties: {fileID: 11400000, guid: cede8dd70e93595449fed38e8144ef4c, type: 2}

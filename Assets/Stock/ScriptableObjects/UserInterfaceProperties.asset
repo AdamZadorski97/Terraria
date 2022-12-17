@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efd7fb4b3a873c43b077b601fa75c1e, type: 3}
+  m_Name: UserInterfaceProperties
+  m_EditorClassIdentifier: 
+  EQBoxActive: {r: 1, g: 1, b: 1, a: 1}
+  EQBoxDeactive: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 1}

@@ -11,7 +11,7 @@ public class ScriptableManager : MonoBehaviour
     public SoundsProperties soundsProperties;
     public WorldProperties worldProperties;
     public BindingProperties bindingProperties;
-
+    public UserInterfaceProperties userInterfaceProperties;
 
     private void Awake()
     {

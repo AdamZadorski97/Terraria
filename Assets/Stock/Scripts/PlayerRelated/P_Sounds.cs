@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class P_Sounds : MonoBehaviour
 {
+    public static P_Sounds Instance { get; private set; }
     private float currentFootstepTime;
     
 
-    [SerializeField] private AudioClip footStep;
+    
     private AudioSource audioSource;
     private PlayerProperties playerProperties;
     private SoundsProperties soundProperties;
     private Sound footStepVariants;
     private int currentFootStepIndex;
-
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         audioSource = GetComponent<AudioSource>();
     }
     private void Start()
@@ -61,13 +65,13 @@ public class P_Sounds : MonoBehaviour
 
 
 
-    public void PlaySound(string name)
+    public void PlaySound(string name,  float laudness = 1)
     {
         foreach (Sound sounds in soundProperties.Sounds)
         {
             if (name == sounds.name)
             {
-                audioSource.PlayOneShot(sounds.variants[0]);
+                audioSource.PlayOneShot(sounds.variants[0], laudness);
             }
         }
     }

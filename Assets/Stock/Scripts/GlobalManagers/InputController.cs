@@ -81,6 +81,11 @@ public class InputActions : PlayerActionSet
 
     public PlayerAction mineAction;
     public PlayerAction buildAction;
+
+    public PlayerAction scrollEQUp;
+    public PlayerAction scrollEQDown;
+
+
     public InputActions()
     {
         goLeftAction = CreatePlayerAction("Go Left");
@@ -101,6 +106,9 @@ public class InputActions : PlayerActionSet
 
         mineAction = CreatePlayerAction("Mine");
         buildAction = CreatePlayerAction("Build");
+
+        scrollEQUp = CreatePlayerAction("scrollEQUp");
+        scrollEQDown = CreatePlayerAction("scrollEQDown");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -134,10 +142,10 @@ public class InputActions : PlayerActionSet
         playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").key);
         playerActions.lookDownAction.AddDefaultBinding(bindingsScriptable.GetBinding("Look Down").inputControlType);
 
-        playerActions.zoomInAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom In").mouse);
+        playerActions.zoomInAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom In").key);
         playerActions.zoomInAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom In").inputControlType);
 
-        playerActions.zoomOutAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom Out").mouse);
+        playerActions.zoomOutAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom Out").key);
         playerActions.zoomOutAction.AddDefaultBinding(bindingsScriptable.GetBinding("Zoom Out").inputControlType);
 
         playerActions.moveAction = playerActions.CreateTwoAxisPlayerAction(playerActions.goLeftAction, playerActions.goRightAction, playerActions.goDownAction, playerActions.goUpAction);
@@ -156,6 +164,13 @@ public class InputActions : PlayerActionSet
 
         playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").mouse);
         playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").inputControlType);
+
+        playerActions.scrollEQUp.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQUp").mouse);
+        playerActions.scrollEQUp.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQUp").inputControlType);
+
+        playerActions.scrollEQDown.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQDown").mouse);
+        playerActions.scrollEQDown.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQDown").inputControlType);
+
         return playerActions;
     }
 }

@@ -59,13 +59,21 @@ MonoBehaviour:
     key: 0
   - name: Zoom In
     inputControlType: 11
-    mouse: 8
+    mouse: 0
     key: 0
   - name: Zoom Out
     inputControlType: 12
-    mouse: 9
-    key: 0
+    mouse: 0
+    key: 123
   - name: Build
     inputControlType: 0
     mouse: 1
+    key: 63
+  - name: scrollEQUp
+    inputControlType: 14
+    mouse: 8
+    key: 0
+  - name: scrollEQDown
+    inputControlType: 13
+    mouse: 9
     key: 0
