@@ -9,9 +9,9 @@ public class P_MineController : MonoBehaviour
     public LightTilemapCollider2D lightTilemapCollider2D;
     public ParticleSystem miningParticles;
     public GameObject minedSprite;
-    private PlayerProperties playerProporties;
     private BlockProperties blockProporties;
     private P_Sounds p_Sounds;
+    private P_InventoryController p_InventoryController;
     private float currentMiningTime;
     private float miningTime = Mathf.Infinity;
     private Vector3Int currentMinePosition;
@@ -19,9 +19,10 @@ public class P_MineController : MonoBehaviour
     [SerializeField]private LayerMask objectMask;
     private void Start()
     {
-        playerProporties = ScriptableManager.Instance.playerProperties;
+
         blockProporties = ScriptableManager.Instance.blockProperties;
         p_Sounds = GetComponent<P_Sounds>();
+        p_InventoryController = GetComponent<P_InventoryController>();
     }
 
     private void Update()
@@ -54,6 +55,7 @@ public class P_MineController : MonoBehaviour
                 currentMiningTime += Time.deltaTime;
                 if (currentMiningTime > miningTime)
                 {
+
                     OnResourceMined(tilemap);
                 }
 
@@ -125,6 +127,7 @@ public class P_MineController : MonoBehaviour
 
     private void SetupMinedResource(Tilemap tilemap)
     {
+        p_InventoryController.AddNewItem(GetBlockProporties(tilemap.GetTile(currentMinePosition)).tileId, tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point)));
         CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));

@@ -12,6 +12,7 @@ public class BlockProperties: ScriptableObject
 [Serializable]
 public class Block
 {
+    public int tileId;
     public string tileName;
     public TileBase tileBase;
     public float timeToDestroy;

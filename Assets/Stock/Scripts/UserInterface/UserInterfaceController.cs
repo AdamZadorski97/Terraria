@@ -6,10 +6,12 @@ using DG.Tweening;
 public class UserInterfaceController : MonoBehaviour
 {
     public static UserInterfaceController Instance { get; private set; }
-
+   
+    public List<EQBoxController> eQBoxControllers;
+    
     [SerializeField] private Image healthBar;
     [SerializeField] private Image oxygenBar;
-    [SerializeField] private List<EQBoxController> eQBoxControllers;
+
     private P_Sounds p_Sounds;
     private int currenteQBoxSelected;
 
@@ -21,7 +23,7 @@ public class UserInterfaceController : MonoBehaviour
         }
     }
 
- 
+
     private void Start()
     {
         eQBoxControllers[0].ActivateBox();
@@ -33,14 +35,16 @@ public class UserInterfaceController : MonoBehaviour
         CheckEQScroll();
     }
 
+
+
     private void CheckEQScroll()
     {
         if (InputController.Instance.Actions.scrollEQUp.WasPressed)
         {
             eQBoxControllers[currenteQBoxSelected].DeactivateBox();
-            if (currenteQBoxSelected == eQBoxControllers.Count-2)
-            { 
-                currenteQBoxSelected = 0; 
+            if (currenteQBoxSelected == eQBoxControllers.Count - 2)
+            {
+                currenteQBoxSelected = 0;
             }
             else
             {
@@ -56,7 +60,7 @@ public class UserInterfaceController : MonoBehaviour
             eQBoxControllers[currenteQBoxSelected].DeactivateBox();
             if (currenteQBoxSelected == 0)
             {
-                currenteQBoxSelected = eQBoxControllers.Count-1;
+                currenteQBoxSelected = eQBoxControllers.Count - 1;
             }
             else
             {
@@ -65,15 +69,7 @@ public class UserInterfaceController : MonoBehaviour
             p_Sounds.PlaySound("EQScroll", 0.25f);
             eQBoxControllers[currenteQBoxSelected].ActivateBox();
         }
-
-
-
-
     }
-
-
-
-
 
     public void UpdateHealthBar(float value)
     {

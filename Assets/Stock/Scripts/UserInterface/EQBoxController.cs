@@ -15,14 +15,21 @@ public class EQBoxController : MonoBehaviour
         userInterfaceProperties = ScriptableManager.Instance.userInterfaceProperties;
     }
 
-    public void UpdateItemAmount(int value)
+    public void UpdateItemAmount(int value, Sprite sprite)
     {
         itemAmount.text = value.ToString();
+        if (value > 0)
+        {
+            itemImage.enabled = true;
+            itemImage.sprite = sprite;
+        }
     }
+
     public void ActivateBox()
     {
         frame.color = userInterfaceProperties.EQBoxActive;
     }
+
     public void DeactivateBox()
     {
         frame.color = userInterfaceProperties.EQBoxDeactive;
