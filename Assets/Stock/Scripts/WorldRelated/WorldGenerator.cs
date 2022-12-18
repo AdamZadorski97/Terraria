@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.Universal;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -28,9 +30,12 @@ public class WorldGenerator : MonoBehaviour
         int y0 = 0;
         int y1 = - mapConst * height / 2 - mapConst / 2;
 
+        int yt = 0;
+        var random = new System.Random();
         for (int x = x0; x < x1; x++)
         {
-            for (int y = y0; y1 < y; y--)
+            yt += random.Next(-1, 2); ;
+            for (int y = yt; y1 < y; y--)
             {
                 var tilePos = tileMap.WorldToCell(new Vector2(x, y));
                 tileMap.SetTile(tilePos, tile);
