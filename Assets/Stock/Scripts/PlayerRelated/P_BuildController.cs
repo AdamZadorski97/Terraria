@@ -12,6 +12,7 @@ public class P_BuildController : MonoBehaviour
     private P_InventoryController p_InventoryController;
     [SerializeField] private Tilemap tileMap;
     private BlockProperties blockProperties;
+    private ItemProperties itemProperties;
     private void Update()
     {
         if (InputController.Instance.Actions.buildAction.WasReleased)
@@ -22,6 +23,7 @@ public class P_BuildController : MonoBehaviour
     private void Start()
     {
         blockProperties = ScriptableManager.Instance.blockProperties;
+        itemProperties = ScriptableManager.Instance.itemProperties;
         p_InventoryController = GetComponent<P_InventoryController>();
     }
 
@@ -33,7 +35,7 @@ public class P_BuildController : MonoBehaviour
     }
 
 
-    
+
     private void Build()
     {
 
@@ -46,16 +48,37 @@ public class P_BuildController : MonoBehaviour
             {
                 var tilePos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
                 tileMap.SetTile(tilePos, GetBlockProporties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemID));
-             
-
-                lightTilemapCollider2D.Initialize();
-                Light2D.ForceUpdateAll();
-                LightingManager2D.ForceUpdate();
-                p_InventoryController.GetItem(UserInterfaceController.Instance.GetCurrentSlot());
             }
+
+            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.interactiveItem)
+            {
+                if (!CheckBlockAbove())
+                    return;
+                Debug.Log("place");
+                var itemPos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
+                var item = GetItemProperties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemID);
+                GameObject placedItem = Instantiate(item.itemPrefab);
+                placedItem.transform.position = itemPos + new Vector3(0.5f, 0.5f);
+            }
+
+
+            p_InventoryController.GetItem(UserInterfaceController.Instance.GetCurrentSlot());
+            lightTilemapCollider2D.Initialize();
+            Light2D.ForceUpdateAll();
+            LightingManager2D.ForceUpdate();
         }
     }
 
+
+    private bool CheckBlockAbove()
+    {
+        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.down, 1, groundLayer);
+     
+        
+        
+        return hit.collider;
+    }
 
     private void SnapObject(Transform objectToBuild)
     {
@@ -75,6 +98,18 @@ public class P_BuildController : MonoBehaviour
             if (block.tileId == id)
             {
                 return block.tile;
+            }
+        }
+        return null;
+    }
+
+    private Item GetItemProperties(int id)
+    {
+        foreach (Item item in itemProperties.item)
+        {
+            if (item.itemID == id)
+            {
+                return item;
             }
         }
         return null;

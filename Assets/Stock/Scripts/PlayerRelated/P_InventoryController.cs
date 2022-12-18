@@ -26,9 +26,20 @@ public class P_InventoryController : MonoBehaviour
             slot.slotNumber = number;
             number++;
         }
+        UpdateInventory();
     }
 
-    public void AddNewItem(int ID, Tile tile, ItemType itemType)
+    public void UpdateInventory()
+    {
+        int slotNumber = 0;
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
+            slotNumber++;
+        }
+    }
+
+    public void AddNewItem(int ID, ItemType itemType, Tile tile = null, Sprite sprite = null)
     {
         int slotNumber = 0;
         foreach (InventorySlot slot in inventorySlots)
@@ -36,7 +47,11 @@ public class P_InventoryController : MonoBehaviour
             if (ID == slot.itemID)
             {
                 slot.itemAmount++;
+                if(tile!=null)
                 slot.itemSprite = tile.sprite;
+                if(sprite!=null)
+                    slot.itemSprite = sprite;
+
                 slot.itemType = itemType;
                 userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
                 return;
@@ -58,9 +73,19 @@ public class P_InventoryController : MonoBehaviour
         }
     }
 
+
+
+
+
+
     public void GetItem(int slot)
     {
         inventorySlots[slot].itemAmount--;
+        if(inventorySlots[slot].itemAmount<=0)
+        {
+            inventorySlots[slot].itemSprite = null;
+        }
+
         userInterfaceController.eQBoxControllers[slot].UpdateItemAmount(inventorySlots[slot].itemAmount, inventorySlots[slot].itemSprite);
     }
 

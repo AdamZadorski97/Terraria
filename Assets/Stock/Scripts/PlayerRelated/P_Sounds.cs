@@ -47,7 +47,6 @@ public class P_Sounds : MonoBehaviour
         currentFootstepTime += Time.deltaTime;
 
         float refreshTime = playerProperties.footStepRate * (Mathf.Abs(MoveValue) *0.1f);
-        Debug.Log(refreshTime);
         if (refreshTime < 0.25f)
             refreshTime = playerProperties.footStepRate;
 

@@ -16,7 +16,7 @@ public class P_MineController : MonoBehaviour
     private float miningTime = Mathf.Infinity;
     private Vector3Int currentMinePosition;
 
-    [SerializeField]private LayerMask objectMask;
+    [SerializeField] private LayerMask objectMask;
     private void Start()
     {
         blockProporties = ScriptableManager.Instance.blockProperties;
@@ -38,6 +38,20 @@ public class P_MineController : MonoBehaviour
 
         if (InputController.Instance.Actions.mineAction.IsPressed)
         {
+
+            RaycastHit2D hit = GetMouseHit();
+            if (GetMouseHit().collider != null)
+            {
+                if (hit.collider.GetComponent<ItemController>())
+                {
+                    Item item = hit.collider.GetComponent<ItemController>().item;
+                    p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
+                    Destroy(hit.collider.gameObject);
+                }
+            }
+
+
+
             if (GetMiningTilemap() != null)
             {
                 Tilemap tilemap = GetMiningTilemap();
@@ -58,8 +72,6 @@ public class P_MineController : MonoBehaviour
 
                     OnResourceMined(tilemap);
                 }
-
-
             }
             else
             {
@@ -121,6 +133,10 @@ public class P_MineController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.up, 1, objectMask);
         if (hit.collider != null)
         {
+            if (hit.transform.GetComponent<ItemController>())
+            {
+                p_InventoryController.AddNewItem(hit.transform.GetComponent<ItemController>().item.itemID, ItemType.interactiveItem);
+            }
             Destroy(hit.transform.gameObject);
         }
     }
@@ -128,9 +144,9 @@ public class P_MineController : MonoBehaviour
     private void SetupMinedResource(Tilemap tilemap)
     {
         Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
-        p_InventoryController.AddNewItem(GetBlockProporties(tile).tileId, tile, ItemType.block);
-      
-        
+        p_InventoryController.AddNewItem(GetBlockProporties(tile).tileId, ItemType.block, tile);
+
+
         CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));

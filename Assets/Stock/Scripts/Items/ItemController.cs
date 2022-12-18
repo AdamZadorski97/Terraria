@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
+public class ItemController : MonoBehaviour
 {
-    block,
-    interactiveItem,
-    weapon,
+    public Item item;
 }

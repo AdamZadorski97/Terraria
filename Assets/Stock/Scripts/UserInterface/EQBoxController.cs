@@ -23,6 +23,10 @@ public class EQBoxController : MonoBehaviour
             itemImage.enabled = true;
             itemImage.sprite = sprite;
         }
+        else
+        {
+            itemImage.enabled = false;
+        }
     }
 
     public void ActivateBox()
