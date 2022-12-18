@@ -141,7 +141,8 @@ public class P_MineController : MonoBehaviour
         {
             if (hit.transform.GetComponent<ItemController>())
             {
-                p_InventoryController.AddNewItem(hit.transform.GetComponent<ItemController>().item.itemID, ItemType.interactiveItem);
+                Item item = hit.collider.GetComponent<ItemController>().item;
+                p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
             }
             Destroy(hit.transform.gameObject);
         }

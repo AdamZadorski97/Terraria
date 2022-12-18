@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5418293169127772342}
   - component: {fileID: 5708971213622612683}
-  m_Layer: 31
+  m_Layer: 8
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,8 @@ GameObject:
   - component: {fileID: 6773774358097145479}
   - component: {fileID: 5333434413093595530}
   - component: {fileID: 7051750482085910115}
-  m_Layer: 31
+  - component: {fileID: 5871167601147473449}
+  m_Layer: 8
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,3 +164,15 @@ MonoBehaviour:
     itemPrefab: {fileID: 6773774358097145477}
     sprite: {fileID: 21300204, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
     miningTime: 0.5
+--- !u!114 &5871167601147473449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773774358097145477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fab60da5f07473498a262a893ab81ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
