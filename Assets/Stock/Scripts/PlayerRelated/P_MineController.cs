@@ -19,7 +19,6 @@ public class P_MineController : MonoBehaviour
     [SerializeField]private LayerMask objectMask;
     private void Start()
     {
-
         blockProporties = ScriptableManager.Instance.blockProperties;
         p_Sounds = GetComponent<P_Sounds>();
         p_InventoryController = GetComponent<P_InventoryController>();
@@ -49,7 +48,8 @@ public class P_MineController : MonoBehaviour
                     miningParticles.Play();
                     currentMiningTime = 0;
                 }
-                miningTime = GetBlockProporties(tilemap.GetTile(currentMinePosition)).timeToDestroy;
+                Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
+                miningTime = GetBlockProporties(tile).timeToDestroy;
                 miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 1.1f, 0);
 
                 currentMiningTime += Time.deltaTime;
@@ -127,7 +127,10 @@ public class P_MineController : MonoBehaviour
 
     private void SetupMinedResource(Tilemap tilemap)
     {
-        p_InventoryController.AddNewItem(GetBlockProporties(tilemap.GetTile(currentMinePosition)).tileId, tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point)));
+        Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
+        p_InventoryController.AddNewItem(GetBlockProporties(tile).tileId, tile, ItemType.block);
+      
+        
         CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
@@ -147,11 +150,11 @@ public class P_MineController : MonoBehaviour
 
     }
 
-    private Block GetBlockProporties(TileBase tileBase)
+    private Block GetBlockProporties(Tile tile)
     {
         foreach (Block block in blockProporties.blocks)
         {
-            if (block.tileBase = tileBase)
+            if (block.tile = tile)
             {
                 return block;
             }

@@ -14,7 +14,9 @@ public class Block
 {
     public int tileId;
     public string tileName;
-    public TileBase tileBase;
+    public ItemType itemType;
+    public Tile tile;
     public float timeToDestroy;
     public ParticleSystem destroyParticles;
+  
 }

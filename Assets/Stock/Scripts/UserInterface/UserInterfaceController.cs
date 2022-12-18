@@ -24,18 +24,18 @@ public class UserInterfaceController : MonoBehaviour
     }
 
 
-    private void Start()
+
+    IEnumerator Start()
     {
-        eQBoxControllers[0].ActivateBox();
         p_Sounds = P_Sounds.Instance;
+        yield return new WaitForEndOfFrame();
+        eQBoxControllers[0].ActivateBox();
     }
 
     public void Update()
     {
         CheckEQScroll();
     }
-
-
 
     private void CheckEQScroll()
     {
@@ -79,5 +79,10 @@ public class UserInterfaceController : MonoBehaviour
     public void UpdateOxygenBar(float value)
     {
         oxygenBar.DOFillAmount(value, 0.5f);
+    }
+
+    public int GetCurrentSlot()
+    {
+        return currenteQBoxSelected;
     }
 }
