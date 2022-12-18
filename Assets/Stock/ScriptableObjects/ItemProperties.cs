@@ -17,4 +17,5 @@ public class Item
     public string itemName;
     public GameObject itemPrefab;
     public Sprite sprite;
+    public float miningTime;
 }

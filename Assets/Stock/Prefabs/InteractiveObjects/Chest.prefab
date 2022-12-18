@@ -162,3 +162,4 @@ MonoBehaviour:
     itemName: Chest
     itemPrefab: {fileID: 6773774358097145477}
     sprite: {fileID: 21300204, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
+    miningTime: 0.5

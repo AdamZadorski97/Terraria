@@ -45,8 +45,14 @@ public class P_MineController : MonoBehaviour
                 if (hit.collider.GetComponent<ItemController>())
                 {
                     Item item = hit.collider.GetComponent<ItemController>().item;
-                    p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
-                    Destroy(hit.collider.gameObject);
+                    miningTime = item.miningTime;
+                     currentMiningTime += Time.deltaTime;
+                    if (currentMiningTime > miningTime)
+                    {
+                        p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
+                        Destroy(hit.collider.gameObject);
+                        OnStopMining();
+                    }
                 }
             }
 
@@ -147,7 +153,7 @@ public class P_MineController : MonoBehaviour
         p_InventoryController.AddNewItem(GetBlockProporties(tile).tileId, ItemType.block, tile);
 
 
-        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point));
+        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f,0,0));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.transform.localScale = Vector3.one * 0.8f;
