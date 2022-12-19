@@ -40,6 +40,8 @@ public class P_MineController : MonoBehaviour
         {
 
             RaycastHit2D hit = GetMouseHit();
+
+
             if (GetMouseHit().collider != null)
             {
                 if (hit.collider.GetComponent<ItemController>())

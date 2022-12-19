@@ -35,3 +35,9 @@ MonoBehaviour:
   - name: EQScroll
     variants:
     - {fileID: 8300000, guid: e0b43ea597c9967419b57e983d1379b2, type: 3}
+  - name: DoorOpen
+    variants:
+    - {fileID: 8300000, guid: aa630ae459d35974881ed35434e4477c, type: 3}
+  - name: DoorClose
+    variants:
+    - {fileID: 8300000, guid: 31c0b5eecc7928e4d90ff4163da1da1d, type: 3}

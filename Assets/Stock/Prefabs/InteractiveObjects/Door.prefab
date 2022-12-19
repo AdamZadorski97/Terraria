@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5418293169127772342}
   - component: {fileID: 5708971213622612683}
+  - component: {fileID: 8962658141592688961}
   m_Layer: 8
   m_Name: Renderer
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5676423756607615084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2128, z: 0}
-  m_LocalScale: {x: 0.6797, y: 0.5744, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.15, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6773774358097145479}
@@ -84,6 +85,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8962658141592688961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5676423756607615084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5783dbbad6a59184fa58aa75d79bcc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowType: 1
+  shadowLayer: 0
+  shadowDistance: 0
+  shadowDistanceMin: 0.5
+  shadowDistanceMax: 1
+  shadowTranslucency: 0
+  maskType: 3
+  maskLit: 0
+  maskPivot: 0
+  maskLayer: 0
+  maskLitCustom: 1
+  bumpMapMode:
+    type: 0
+    textureType: 0
+    texture: {fileID: 0}
+    sprite: {fileID: 0}
+    invertX: 0
+    invertY: 0
+    depth: 1
+    spriteRenderer: {fileID: 5708971213622612683}
+  mainShape:
+    shadowType: 1
+    maskType: 3
+    maskPivot: 0
+    transform: {fileID: 5418293169127772342}
 --- !u!1 &6773774358097145477
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,9 +133,9 @@ GameObject:
   - component: {fileID: 6773774358097145479}
   - component: {fileID: 5333434413093595530}
   - component: {fileID: 7051750482085910115}
-  - component: {fileID: 5871167601147473449}
+  - component: {fileID: 2487637724286406815}
   m_Layer: 8
-  m_Name: Chest
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +202,7 @@ MonoBehaviour:
     itemPrefab: {fileID: 6773774358097145477}
     sprite: {fileID: 21300204, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
     miningTime: 0.5
---- !u!114 &5871167601147473449
+--- !u!114 &2487637724286406815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,8 +211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6773774358097145477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fab60da5f07473498a262a893ab81ea, type: 3}
+  m_Script: {fileID: 11500000, guid: ccbc18f00b2ee09459a861cc2018459d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatingCanvasOffset: {x: 1, y: 0.25}
-  triggerEnterMessage: Open chest E
+  doorOpenScale: {x: 0.45, y: 2, z: 0}
+  doorCloseScale: {x: 0.15, y: 2, z: 0}
+  renderer: {fileID: 5418293169127772342}
+  lightCollider2D: {fileID: 8962658141592688961}

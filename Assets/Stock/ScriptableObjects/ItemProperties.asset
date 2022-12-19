@@ -25,3 +25,9 @@ MonoBehaviour:
     itemPrefab: {fileID: 6773774358097145477, guid: b2b0b01c5b8fd5245b154e6a89db27e1, type: 3}
     sprite: {fileID: 21300204, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
     miningTime: 0.5
+  - itemID: 70
+    item: 0
+    itemName: Door
+    itemPrefab: {fileID: 6773774358097145477, guid: 228a7451904ed304b8110b1cd710899a, type: 3}
+    sprite: {fileID: 21300236, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
+    miningTime: 0.5

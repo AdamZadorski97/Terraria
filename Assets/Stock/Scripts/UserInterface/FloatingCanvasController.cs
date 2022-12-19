@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class FloatingCanvasController : MonoBehaviour
 {
     public static FloatingCanvasController Instance { get; private set; }
-   
-    public GameObject floatingCanvas;
+
+    [SerializeField] private TMP_Text textMessage;
+    [SerializeField] private GameObject floatingCanvas;
 
     private void Awake()
     {
@@ -17,9 +18,11 @@ public class FloatingCanvasController : MonoBehaviour
     }
 
 
-    public void TurnOnCanvas()
+    public void TurnOnCanvas(string message, Vector3 messagePosition)
     {
         floatingCanvas.SetActive(true);
+        floatingCanvas.transform.position = messagePosition;
+        textMessage.text = message;
     }
 
     public void TurnOffCanvas()
