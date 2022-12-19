@@ -8,7 +8,8 @@ public class UserInterfaceController : MonoBehaviour
     public static UserInterfaceController Instance { get; private set; }
    
     public List<EQBoxController> eQBoxControllers;
-    
+    public List<EQBoxController> eQBoxCraftingControllers;
+    public EQBoxController EQBoxReadyRecipieController;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image oxygenBar;
 
@@ -22,8 +23,6 @@ public class UserInterfaceController : MonoBehaviour
             Instance = this;
         }
     }
-
-
 
     IEnumerator Start()
     {
@@ -54,7 +53,6 @@ public class UserInterfaceController : MonoBehaviour
             Debug.Log("Activate: " + currenteQBoxSelected);
             eQBoxControllers[currenteQBoxSelected].ActivateBox();
         }
-
 
         if (InputController.Instance.Actions.scrollEQDown.WasPressed)
         {

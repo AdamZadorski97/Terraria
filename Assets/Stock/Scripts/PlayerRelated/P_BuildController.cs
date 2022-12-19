@@ -44,6 +44,9 @@ public class P_BuildController : MonoBehaviour
         if (GetMouseHit())
             return;
 
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.ore)
+            return;
+
         if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemAmount > 0)
         {
             if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.block)

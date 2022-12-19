@@ -48,7 +48,7 @@ public class P_MineController : MonoBehaviour
                 {
                     Item item = hit.collider.GetComponent<ItemController>().item;
                     miningTime = item.miningTime;
-                     currentMiningTime += Time.deltaTime;
+                    currentMiningTime += Time.deltaTime;
                     if (currentMiningTime > miningTime)
                     {
                         p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
@@ -153,10 +153,20 @@ public class P_MineController : MonoBehaviour
     private void SetupMinedResource(Tilemap tilemap)
     {
         Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
-        p_InventoryController.AddNewItem(GetBlockProporties(tile).tileId, ItemType.block, tile);
+        Block minedResource = GetBlockProporties(tile);
 
 
-        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f,0,0));
+        foreach (LootFromBlock lootFromBlock in minedResource.lootFromBlocks)
+        {
+            for (int i = 0; i < lootFromBlock.value; i++)
+            {
+                p_InventoryController.AddNewItem(lootFromBlock.blocksLoot.id, ItemType.ore, null, lootFromBlock.blocksLoot.lootSprite);
+            }
+        }
+
+
+
+        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 0, 0));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.transform.localScale = Vector3.one * 0.8f;
@@ -168,11 +178,6 @@ public class P_MineController : MonoBehaviour
     {
         minedSprite.gameObject.SetActive(false);
         p_Sounds.PlaySound("ResourcePickup");
-    }
-    IEnumerator UpdateLight()
-    {
-        yield return new WaitForSeconds(0.01f);
-
     }
 
     private Block GetBlockProporties(Tile tile)

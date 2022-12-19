@@ -77,8 +77,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockProperties: {fileID: 11400000, guid: b851874693551af4d9b5239b9f280c73, type: 2}
+  itemProperties: {fileID: 11400000, guid: 2b489809b1a2f004d99a0e7731bf87eb, type: 2}
   playerProperties: {fileID: 11400000, guid: 532173e5b39221d4eb571a152378a410, type: 2}
   soundsProperties: {fileID: 11400000, guid: b48280ecaa813a5498c7c3998c3a2fff, type: 2}
   worldProperties: {fileID: 11400000, guid: b6bdc6c29d86e6c46a6f92a03184ea55, type: 2}
   bindingProperties: {fileID: 11400000, guid: b1ddad4a15a95e9458495639021c70a3, type: 2}
   userInterfaceProperties: {fileID: 11400000, guid: cede8dd70e93595449fed38e8144ef4c, type: 2}
+  craftingProperties: {fileID: 11400000, guid: 330dbf65591bdbd428585247c5a9c9d9, type: 2}

@@ -77,3 +77,7 @@ MonoBehaviour:
     inputControlType: 13
     mouse: 9
     key: 0
+  - name: Open Crafting
+    inputControlType: 21
+    mouse: 0
+    key: 52

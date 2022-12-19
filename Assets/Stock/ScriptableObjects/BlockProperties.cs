@@ -23,6 +23,14 @@ public class Block
 [Serializable]
 public class LootFromBlock
 {
-    public int id;
+    public BlocksLoot blocksLoot;
     public int value;
+}
+
+[Serializable]
+public class BlocksLoot
+{
+    public int id;
+    public string lootName;
+    public Sprite lootSprite;
 }

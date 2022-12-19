@@ -13,6 +13,7 @@ public class ScriptableManager : MonoBehaviour
     public WorldProperties worldProperties;
     public BindingProperties bindingProperties;
     public UserInterfaceProperties userInterfaceProperties;
+    public CraftingProperties craftingProperties;
 
     private void Awake()
     {
@@ -21,5 +22,4 @@ public class ScriptableManager : MonoBehaviour
             Instance = this;
         }
     }
- 
 }
