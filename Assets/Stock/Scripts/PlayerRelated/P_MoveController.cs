@@ -18,7 +18,8 @@ public class P_MoveController : MonoBehaviour
     private float jumpsCount;
     private bool grounded;
     private bool isOnLeadder;
-
+    private bool isInJumpState;
+    private float jumpStateTime;
     public bool IsOnLeadder
     {
         get
@@ -88,7 +89,17 @@ public class P_MoveController : MonoBehaviour
 
     private void Movement()
     {
-        if (IsOnLeadder)
+        if(isInJumpState)
+        {
+            jumpStateTime += Time.deltaTime;
+            if(jumpStateTime>0.25f)
+            {
+                isInJumpState = false;
+                jumpStateTime = 0;
+            }
+        }
+
+        if (IsOnLeadder && !isInJumpState)
         {
             LeaderMovement();
             return;
@@ -216,12 +227,17 @@ public class P_MoveController : MonoBehaviour
             return;
         }
         if (jumpsCount == 0)
+        {
             p_Sounds.PlaySound("Jump");
+        }
         else
+        {
             p_Sounds.PlaySound("DoubleJump");
+        }
         jumpsCount++;
         transform.position += new Vector3(0, 0.1f, 0);
         moveVector = new Vector2(moveVector.x, playerProporties.jumpForce);
+        isInJumpState = true;
     }
     public void OnGroundHit()
     {
