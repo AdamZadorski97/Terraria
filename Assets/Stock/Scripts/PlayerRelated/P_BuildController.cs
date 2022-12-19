@@ -9,6 +9,8 @@ public class P_BuildController : MonoBehaviour
 
     public LightTilemapCollider2D lightTilemapCollider2D;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask interactiveObjectLayer;
+
     private P_InventoryController p_InventoryController;
     [SerializeField] private Tilemap tileMap;
     private BlockProperties blockProperties;
@@ -73,11 +75,28 @@ public class P_BuildController : MonoBehaviour
     private bool CheckBlockAbove()
     {
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.down, 1, groundLayer);
+        RaycastHit2D hitGround = Physics2D.Raycast(pos, Vector2.down, 1, groundLayer);
+        if (hitGround.collider != null)
+        {
+            return true;
+        }
+
      
-        
-        
-        return hit.collider;
+
+        RaycastHit2D hitInteractive = Physics2D.Raycast(pos, Vector2.down, 1f, interactiveObjectLayer);
+        if (hitInteractive.collider != null)
+        {
+            if (hitInteractive.collider.GetComponent<LeadderController>())
+            {
+                return true;
+            }
+        }
+           
+             
+
+        return false;
+           
+
     }
 
     private void SnapObject(Transform objectToBuild)

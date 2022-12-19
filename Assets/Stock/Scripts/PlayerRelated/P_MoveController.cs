@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class P_MoveController : MonoBehaviour
 {
+    public static P_MoveController Instance { get; private set; }
+
+
+
     private P_Sounds p_Sounds;
     private PlayerProperties playerProporties;
     [SerializeField] private LayerMask groundLayer;
@@ -13,24 +17,41 @@ public class P_MoveController : MonoBehaviour
     private float runSpeedValue;
     private float jumpsCount;
     private bool grounded;
+    private bool isOnLeadder;
+
+    public bool IsOnLeadder
+    {
+        get
+        {
+            return isOnLeadder;
+        }
+        set
+        {
+            isOnLeadder = value;
+        }
+    }
 
     public bool Grounded
     {
-        get 
+        get
         {
             return grounded;
-        } 
-        set 
+        }
+        set
         {
-            if(!grounded && value == true)
+            if (!grounded && value == true)
             {
                 OnGroundHit();
             }
-            grounded = value; 
+            grounded = value;
         }
     }
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         IntializePlayer();
     }
 
@@ -67,6 +88,14 @@ public class P_MoveController : MonoBehaviour
 
     private void Movement()
     {
+        if (IsOnLeadder)
+        {
+            LeaderMovement();
+            return;
+        }
+
+
+
         VerticalAirboneMovement();
 
         if (inputValue.x != 0) SetFacing(inputValue.x);
@@ -80,6 +109,17 @@ public class P_MoveController : MonoBehaviour
         HorizontalAirboneMovement();
         HorizontalGroundedMovement();
     }
+
+    private void LeaderMovement()
+    {
+        Debug.Log(inputValue.y);
+        moveVector.x = Mathf.Lerp(moveVector.x, 0 + inputValue.x, Time.deltaTime *10);
+        moveVector.y = inputValue.y  * 4;
+    }
+
+
+
+
 
     private void HorizontalGroundedMovement()
     {
@@ -122,7 +162,7 @@ public class P_MoveController : MonoBehaviour
         Vector2 position = capsuleCollider.transform.position + (Vector3)capsuleCollider.offset - new Vector3(capsuleCollider.size.x / 1.75f, capsuleCollider.size.y / 2) - new Vector3(0, 0.1f, 0);
         Vector2 direction = Vector2.right;
         float distance = capsuleCollider.size.x / 1.5f;
-        
+
         RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
         if (hit.collider != null)
         {
@@ -133,7 +173,7 @@ public class P_MoveController : MonoBehaviour
         {
             Grounded = false;
         }
-  
+
     }
 
     private bool CheckWall(Vector2 direction)
@@ -175,8 +215,8 @@ public class P_MoveController : MonoBehaviour
         {
             return;
         }
-        if(jumpsCount==0)
-        p_Sounds.PlaySound("Jump");
+        if (jumpsCount == 0)
+            p_Sounds.PlaySound("Jump");
         else
             p_Sounds.PlaySound("DoubleJump");
         jumpsCount++;
