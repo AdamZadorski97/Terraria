@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "BlockProperties", menuName = "ScriptableObjects/BlockProperties", order = 1)]
-public class BlockProperties: ScriptableObject
+public class BlockProperties : ScriptableObject
 {
     public List<Block> blocks;
 }
@@ -17,6 +17,12 @@ public class Block
     public ItemType itemType;
     public Tile tile;
     public float timeToDestroy;
-    public ParticleSystem destroyParticles;
-  
+    public List<LootFromBlock> lootFromBlocks;
+}
+
+[Serializable]
+public class LootFromBlock
+{
+    public int id;
+    public int value;
 }
