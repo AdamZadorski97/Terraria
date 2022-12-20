@@ -67,7 +67,7 @@ public class P_InventoryController : MonoBehaviour
                 AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, readyRecipieSlot.itemSprite, craftingSlots[i].itemAmount);
                 craftingSlots[i].itemAmount = 0;
 
-                if (craftingSlots[i].itemAmount==0)
+                if (craftingSlots[i].itemAmount == 0)
                 {
                     craftingSlots[i].itemID = 0;
                 }
@@ -134,10 +134,19 @@ public class P_InventoryController : MonoBehaviour
         lastSlotGet = slotNumber;
 
         tempIDOnPickup = inventorySlots[slotNumber].itemID;
-        tempAmountOnPickup++;
+
+        if (InputController.Instance.Actions.stackItems.IsPressed)
+        {
+            tempAmountOnPickup = inventorySlots[slotNumber].itemAmount;
+        }
+        else
+        {
+            tempAmountOnPickup++;
+        }
+
         tempItemType = inventorySlots[slotNumber].itemType;
         tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
-        GetItem(slotNumber);
+        GetItem(slotNumber, tempAmountOnPickup);
     }
 
     public void SetSlotDataOnClick(int slotNumber)
@@ -146,11 +155,12 @@ public class P_InventoryController : MonoBehaviour
         {
             return;
         }
-        if(craftingSlots[slotNumber].itemID != tempAmountOnPickup)
+        if (craftingSlots[slotNumber].itemID != tempAmountOnPickup)
         {
             AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
             craftingSlots[slotNumber].itemAmount = 0;
         }
+
 
 
 
@@ -236,7 +246,7 @@ public class P_InventoryController : MonoBehaviour
         {
             if (ID == slot.itemID)
             {
-               
+
                 slot.itemAmount += amount;
                 if (tile != null)
                     slot.itemSprite = tile.sprite;
@@ -255,7 +265,7 @@ public class P_InventoryController : MonoBehaviour
         {
             if (slot.itemAmount == 0)
             {
-                slot.itemAmount+= amount;
+                slot.itemAmount += amount;
                 slot.itemID = ID;
                 if (tile != null)
                     slot.itemSprite = tile.sprite;
@@ -269,9 +279,9 @@ public class P_InventoryController : MonoBehaviour
         }
     }
 
-    public void GetItem(int slot)
+    public void GetItem(int slot, int amount = 1)
     {
-        inventorySlots[slot].itemAmount--;
+        inventorySlots[slot].itemAmount -= amount;
         if (inventorySlots[slot].itemAmount <= 0)
         {
             inventorySlots[slot].itemID = 0;

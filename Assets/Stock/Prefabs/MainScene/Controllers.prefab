@@ -125,9 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ec5d63a67a5bc49adeab426cf3c8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldParameters: {fileID: 11400000, guid: b6bdc6c29d86e6c46a6f92a03184ea55, type: 2}
   tileMap: {fileID: 0}
-  tile: {fileID: 11400000, guid: 5a59e806e31c2f64ba4084929a30b850, type: 2}
+  tiles: []
 --- !u!1 &7189690468556836873
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eQBoxControllers:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

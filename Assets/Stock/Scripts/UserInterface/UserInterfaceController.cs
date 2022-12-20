@@ -41,7 +41,7 @@ public class UserInterfaceController : MonoBehaviour
         if (InputController.Instance.Actions.scrollEQUp.WasPressed)
         {
             eQBoxControllers[currenteQBoxSelected].DeactivateBox();
-            if (currenteQBoxSelected >= eQBoxControllers.Count - 2)
+            if (currenteQBoxSelected >= eQBoxControllers.Count - 1)
             {
                 currenteQBoxSelected = 0;
             }
@@ -59,7 +59,7 @@ public class UserInterfaceController : MonoBehaviour
             eQBoxControllers[currenteQBoxSelected].DeactivateBox();
             if (currenteQBoxSelected <= 0)
             {
-                currenteQBoxSelected = eQBoxControllers.Count - 2;
+                currenteQBoxSelected = eQBoxControllers.Count - 1;
             }
             else
             {

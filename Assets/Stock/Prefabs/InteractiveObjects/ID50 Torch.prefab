@@ -4873,7 +4873,7 @@ MonoBehaviour:
   spotAngleOuter: 360
   coreSize: 0.5
   falloff: 0
-  lightStrength: 0.136
+  lightStrength: 1
   outerAngle: 60
   lightRadius: 1
   shadowDistanceClose: 0

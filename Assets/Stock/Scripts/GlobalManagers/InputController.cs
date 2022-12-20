@@ -86,6 +86,7 @@ public class InputActions : PlayerActionSet
     public PlayerAction scrollEQDown;
 
     public PlayerAction openCrafting;
+    public PlayerAction stackItems;
 
     public InputActions()
     {
@@ -112,6 +113,7 @@ public class InputActions : PlayerActionSet
         scrollEQDown = CreatePlayerAction("scrollEQDown");
 
         openCrafting = CreatePlayerAction("openCrafting");
+        stackItems = CreatePlayerAction("stackItem");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -176,6 +178,9 @@ public class InputActions : PlayerActionSet
 
         playerActions.openCrafting.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").key);
         playerActions.openCrafting.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").inputControlType);
+
+        playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").key);
+        playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").inputControlType);
 
         return playerActions;
     }
