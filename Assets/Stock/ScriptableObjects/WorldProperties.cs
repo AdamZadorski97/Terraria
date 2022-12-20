@@ -9,4 +9,5 @@ public class WorldProperties : ScriptableObject
     public int mapX0;
     public int mapX1;
     public int mapBiome;
+    public int mapAxtreshold;
 }

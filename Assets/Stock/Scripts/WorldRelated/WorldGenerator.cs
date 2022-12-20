@@ -1,56 +1,72 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.Universal;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
 using static FunkyCode.DayLightCollider2D;
 
 public class WorldGenerator : MonoBehaviour
 {
     private WorldProperties worldParameters;
+
     struct Point
     {
         public int x, y;
     }
 
     [SerializeField] private Tilemap tileMap;
-    [SerializeField] private Tile tile;
+    [SerializeField] private List<Tile> tiles;
 
     private void Start()
     {
         worldParameters = ScriptableManager.Instance.worldProperties;
+        GenerateTerrain();
+    }
 
+    private void GenerateTerrain()
+    {
         int mapX0 = worldParameters.mapX0;
         int mapX1 = worldParameters.mapX1;
         int width = mapX1 - mapX0;
-        int biome = worldParameters.mapBiome;
 
-        int tresh = 100;
-        var lineUp = GenerateLineX(mapX0, width, 0);
+        int biome = worldParameters.mapBiome;
+        int treshold = worldParameters.mapAxtreshold;
+
+        Tile tile = tiles[0];
+        List<Point> lineDown;
         int y0;
 
+        // ------------------------- top
+
+        var lineUp = GenerateLineX(tile, mapX0, width, mapX0);
+
         y0 = -1 * biome;
-        var lineDown = GenerateCurveX(mapX0, width, y0, tresh);
-        //GenerateBetween(lineUp, lineDown);
+        lineDown = GenerateCurveX(tile, mapX0, width, y0, treshold);
+        GenerateBetween(tile, lineUp, lineDown);
 
-        y0 = -2 * biome;
-        lineUp = lineDown;
-        lineDown = GenerateCurveX(mapX0, width, y0, tresh);
-        GenerateBetween(lineUp, lineDown);
+        // ------------------------- mid
 
-        y0 = -3 * biome;
+        for (int i = 1; i < tiles.Count; i++)
+        {
+            Debug.Log(i);
+
+            tile = tiles[i];
+            lineUp = lineDown;
+
+            y0 = -(i + 1) * biome;
+            lineDown = GenerateCurveX(tile, mapX0, width, y0, treshold);
+            GenerateBetween(tile, lineUp, lineDown);
+        }
+
+        // ------------------------- bottom
+
         lineUp = lineDown;
-        lineDown = GenerateCurveX(mapX0, width, y0, tresh);
-        //GenerateBetween(lineUp, lineDown);
+        y0 -= treshold + 1;
+        lineDown = GenerateLineX(tile, mapX0, width, y0);
+        GenerateBetween(tile, lineUp, lineDown);
     }
 
-    private void GenerateCup() { 
-    }
-
-    private void GenerateBetween(List<Point> lineUp, List<Point> lineDown)
+    private void GenerateBetween(Tile tile, List<Point> lineUp, List<Point> lineDown)
     {
         if (lineUp == null || lineDown == null)
             throw new Exception("");
@@ -72,7 +88,7 @@ public class WorldGenerator : MonoBehaviour
                 y = yt;
 
                 done = Mathf.Abs(upY / yt);
-                Debug.Log(done);
+                //Debug.Log(done);
 
                 var tilePos = tileMap.WorldToCell(new Vector2(x, y));
                 tileMap.SetTile(tilePos, tile);
@@ -80,7 +96,7 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
-    private List<Point> GenerateCurveX(int x0, int x1, int y0, int treshold)
+    private List<Point> GenerateCurveX(Tile tile, int x0, int x1, int y0, int treshold)
     {
         var points = new List<Point>();
         var rand = new System.Random();
@@ -110,7 +126,7 @@ public class WorldGenerator : MonoBehaviour
         return points;
     }
 
-    private List<Point> GenerateLineX(int x0, int x1, int y0)
+    private List<Point> GenerateLineX(Tile tile, int x0, int x1, int y0)
     {
         var points = new List<Point>();
 

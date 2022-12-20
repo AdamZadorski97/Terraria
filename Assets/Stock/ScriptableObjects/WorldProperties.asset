@@ -15,3 +15,4 @@ MonoBehaviour:
   mapX0: 0
   mapX1: 100
   mapBiome: 100
+  mapAxtreshold: 5
