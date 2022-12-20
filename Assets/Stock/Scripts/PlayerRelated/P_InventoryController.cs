@@ -67,8 +67,14 @@ public class P_InventoryController : MonoBehaviour
                 AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, readyRecipieSlot.itemSprite, craftingSlots[i].itemAmount);
                 craftingSlots[i].itemAmount = 0;
             }
+
             userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemSprite);
         }
+        readyRecipieSlot.itemAmount = 0;
+        readyRecipieSlot.itemID = 0;
+        readyRecipieSlot.itemSprite = null;
+        userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
+
 
         tempIDOnPickup = 0;
         tempSpriteOnPickup = null;
@@ -249,6 +255,7 @@ public class P_InventoryController : MonoBehaviour
                     slot.itemSprite = tile.sprite;
                 if (sprite != null)
                     slot.itemSprite = sprite;
+                slot.itemType = itemType;
                 userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
                 return;
             }

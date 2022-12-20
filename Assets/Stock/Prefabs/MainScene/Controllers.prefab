@@ -258,5 +258,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  eQBoxCraftingControllers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  EQBoxReadyRecipieController: {fileID: 0}
   healthBar: {fileID: 0}
   oxygenBar: {fileID: 0}

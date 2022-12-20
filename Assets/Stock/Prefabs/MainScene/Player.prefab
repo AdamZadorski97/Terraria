@@ -388,10 +388,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727741cba3a36f147b6e01d6a1db816a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToBuild: {fileID: 6773774358097145477, guid: 49e91fca65a9f8e4fbfc613fa2b0be95, type: 3}
+  lightTilemapCollider2D: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  interactiveObjectLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  tileMap: {fileID: 0}
 --- !u!114 &8622477182531470340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,20 +409,115 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySlots:
-  - itemName: 
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 1
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 2
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  craftingSlots:
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
-  - itemName: 
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
     itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  - slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  readyRecipieSlot:
+    slotNumber: 0
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemAmount: 0
+    itemSprite: {fileID: 0}
+  CraftingPanel: {fileID: 0}
+  tempIDOnPickup: 0
+  tempAmountOnPickup: 0
+  tempItemType: 0
+  tempSpriteOnPickup: {fileID: 0}
 --- !u!50 &3039515206753170142
 Rigidbody2D:
   serializedVersion: 4

@@ -21,3 +21,15 @@ MonoBehaviour:
     recipieID: 2
     itemType: 0
     sprite: {fileID: 21300000, guid: 0a5aa6c19bd0d184caee43ea357835f6, type: 3}
+  - itemID: e903000000000000e9030000e9030000e9030000e9030000e903000000000000e9030000
+    recipieID: 80
+    itemType: 2
+    sprite: {fileID: 21300000, guid: b2009c191f7ebe94e908800f9fcb25da, type: 3}
+  - itemID: e9030000e903000000000000e9030000e903000000000000e9030000e903000000000000
+    recipieID: 70
+    itemType: 2
+    sprite: {fileID: 21300000, guid: 56615689b5d5f1b449cfc361da542b37, type: 3}
+  - itemID: 00000000ea0300000000000000000000e903000000000000000000000000000000000000
+    recipieID: 50
+    itemType: 2
+    sprite: {fileID: 21300116, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
