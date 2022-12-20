@@ -66,6 +66,11 @@ public class P_InventoryController : MonoBehaviour
 
                 AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, readyRecipieSlot.itemSprite, craftingSlots[i].itemAmount);
                 craftingSlots[i].itemAmount = 0;
+
+                if (craftingSlots[i].itemAmount==0)
+                {
+                    craftingSlots[i].itemID = 0;
+                }
             }
 
             userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemSprite);
@@ -171,7 +176,7 @@ public class P_InventoryController : MonoBehaviour
         tempSpriteOnPickup = null;
         tempAmountOnPickup = 0;
 
-        AddNewItem(readyRecipieSlot.itemID, readyRecipieSlot.itemType, null, readyRecipieSlot.itemSprite);
+        AddNewItem(readyRecipieSlot.itemID, readyRecipieSlot.itemType, null, readyRecipieSlot.itemSprite, readyRecipieSlot.itemAmount);
         readyRecipieSlot.itemID = 0;
         readyRecipieSlot.itemAmount = 0;
         readyRecipieSlot.itemSprite = null;
@@ -213,8 +218,8 @@ public class P_InventoryController : MonoBehaviour
                 readyRecipieSlot.itemID = craftingRecipie.recipieID;
                 readyRecipieSlot.itemType = craftingRecipie.itemType;
                 readyRecipieSlot.itemSprite = craftingRecipie.sprite;
-                readyRecipieSlot.itemAmount = 1;
-                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(1, readyRecipieSlot.itemSprite);
+                readyRecipieSlot.itemAmount = craftingRecipie.amount;
+                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
                 Debug.Log("RecipieFound");
                 return;
             }
@@ -231,6 +236,7 @@ public class P_InventoryController : MonoBehaviour
         {
             if (ID == slot.itemID)
             {
+               
                 slot.itemAmount += amount;
                 if (tile != null)
                     slot.itemSprite = tile.sprite;
@@ -249,7 +255,7 @@ public class P_InventoryController : MonoBehaviour
         {
             if (slot.itemAmount == 0)
             {
-                slot.itemAmount++;
+                slot.itemAmount+= amount;
                 slot.itemID = ID;
                 if (tile != null)
                     slot.itemSprite = tile.sprite;

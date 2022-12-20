@@ -19,4 +19,5 @@ public class CraftingRecipie
     public int recipieID;
     public ItemType itemType;
     public Sprite sprite;
+    public int amount;
 }
