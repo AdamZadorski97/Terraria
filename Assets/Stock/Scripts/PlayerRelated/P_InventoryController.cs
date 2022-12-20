@@ -64,7 +64,7 @@ public class P_InventoryController : MonoBehaviour
             if (craftingSlots[i].itemAmount > 0)
             {
 
-                AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, readyRecipieSlot.itemSprite, craftingSlots[i].itemAmount);
+                AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, craftingSlots[i].itemSprite, craftingSlots[i].itemAmount);
                 craftingSlots[i].itemAmount = 0;
 
                 if (craftingSlots[i].itemAmount == 0)
@@ -134,19 +134,21 @@ public class P_InventoryController : MonoBehaviour
         lastSlotGet = slotNumber;
 
         tempIDOnPickup = inventorySlots[slotNumber].itemID;
-
+        tempItemType = inventorySlots[slotNumber].itemType;
+        tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
         if (InputController.Instance.Actions.stackItems.IsPressed)
         {
             tempAmountOnPickup = inventorySlots[slotNumber].itemAmount;
+            GetItem(slotNumber, tempAmountOnPickup);
         }
         else
         {
             tempAmountOnPickup++;
+            GetItem(slotNumber, 1);
         }
 
-        tempItemType = inventorySlots[slotNumber].itemType;
-        tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
-        GetItem(slotNumber, tempAmountOnPickup);
+        
+        
     }
 
     public void SetSlotDataOnClick(int slotNumber)
@@ -155,22 +157,51 @@ public class P_InventoryController : MonoBehaviour
         {
             return;
         }
-        if (craftingSlots[slotNumber].itemID != tempAmountOnPickup)
+        if (craftingSlots[slotNumber].itemID == 0 || craftingSlots[slotNumber].itemID == tempIDOnPickup)
         {
-            AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
-            craftingSlots[slotNumber].itemAmount = 0;
+            craftingSlots[slotNumber].itemID = tempIDOnPickup;
+            if (InputController.Instance.Actions.stackItems.IsPressed)
+            {
+                craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
+                tempAmountOnPickup = 0;
+            }
+            else
+            {
+                craftingSlots[slotNumber].itemAmount++;
+                tempAmountOnPickup--;
+            }
+            craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
         }
 
 
 
 
 
-        craftingSlots[slotNumber].itemID = tempIDOnPickup;
-        craftingSlots[slotNumber].itemAmount++;
+        //else if (craftingSlots[slotNumber].itemID != tempIDOnPickup)
+        //{
+
+        //    AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
+
+        //    craftingSlots[slotNumber].itemAmount = 0;
+        //    craftingSlots[slotNumber].itemID = tempIDOnPickup;
+
+        //}
+
+        //else if (craftingSlots[slotNumber].itemID == tempIDOnPickup)
+        //{
+        //    if (InputController.Instance.Actions.stackItems.IsPressed)
+        //    {
+        //        craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
+        //    }
+        //    else
+        //    {
+        //        craftingSlots[slotNumber].itemAmount++;
+        //    }
+        //}
         craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
         userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, tempSpriteOnPickup);
 
-        tempAmountOnPickup--;
+
         CheckRecipie();
     }
 

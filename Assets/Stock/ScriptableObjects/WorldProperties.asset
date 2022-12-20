@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WorldProperties
   m_EditorClassIdentifier: 
   mapX0: 0
-  mapX1: 100
-  mapBiome: 100
+  mapX1: 25
+  mapBiome: 5
   mapAxtreshold: 5
