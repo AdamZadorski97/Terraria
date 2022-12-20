@@ -17,7 +17,7 @@ public class P_BuildController : MonoBehaviour
     private ItemProperties itemProperties;
     private void Update()
     {
-        if (InputController.Instance.Actions.buildAction.WasReleased)
+        if (InputController.Instance.Actions.buildAction.WasReleased && !p_InventoryController.CheckCraftingPanelOpen())
         {
             Build();
         }
