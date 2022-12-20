@@ -6,129 +6,122 @@ using UnityEditor.Rendering.Universal;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static FunkyCode.DayLightCollider2D;
 
 public class WorldGenerator : MonoBehaviour
 {
-    const int mapConst = 5;
+    private WorldProperties worldParameters;
+    struct Point
+    {
+        public int x, y;
+    }
 
-    [SerializeField] private WorldProperties worldParameters;
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile tile;
 
     private void Start()
     {
-        //GenerateWorld(MapSize.small);
-        GenerateWorldV2();
+        worldParameters = ScriptableManager.Instance.worldProperties;
+
+        int mapX0 = worldParameters.mapX0;
+        int mapX1 = worldParameters.mapX1;
+        int width = mapX1 - mapX0;
+        int biome = worldParameters.mapBiome;
+
+        int tresh = 100;
+        var lineUp = GenerateLineX(mapX0, width, 0);
+        int y0;
+
+        y0 = -1 * biome;
+        var lineDown = GenerateCurveX(mapX0, width, y0, tresh);
+        //GenerateBetween(lineUp, lineDown);
+
+        y0 = -2 * biome;
+        lineUp = lineDown;
+        lineDown = GenerateCurveX(mapX0, width, y0, tresh);
+        GenerateBetween(lineUp, lineDown);
+
+        y0 = -3 * biome;
+        lineUp = lineDown;
+        lineDown = GenerateCurveX(mapX0, width, y0, tresh);
+        //GenerateBetween(lineUp, lineDown);
     }
 
-    private void GenerateWorld(MapSize mapSize)
+    private void GenerateCup() { 
+    }
+
+    private void GenerateBetween(List<Point> lineUp, List<Point> lineDown)
     {
-        GetMapSize(mapSize, out int width, out int height);
-        
-        int x0 = - mapConst * width / 2;
-        int x1 = - x0;
+        if (lineUp == null || lineDown == null)
+            throw new Exception("");
 
-        int y0 = 0;
-        int y1 = - mapConst * height / 2 - mapConst / 2;
+        if (lineUp.Count != lineDown.Count)
+            throw new Exception("");
 
-        int yt = 0;
-        var random = new System.Random();
+        int x, y;
+        for (int i = 0; i < lineUp.Count; i++)
+        {
+            if (lineUp[i].x != lineDown[i].x)
+                throw new Exception("");
+
+            float done;
+            float upY = lineUp[i].y;
+            for (int yt = lineDown[i].y; yt < lineUp[i].y; yt++)
+            {
+                x = lineDown[i].x;
+                y = yt;
+
+                done = Mathf.Abs(upY / yt);
+                Debug.Log(done);
+
+                var tilePos = tileMap.WorldToCell(new Vector2(x, y));
+                tileMap.SetTile(tilePos, tile);
+            }
+        }
+    }
+
+    private List<Point> GenerateCurveX(int x0, int x1, int y0, int treshold)
+    {
+        var points = new List<Point>();
+        var rand = new System.Random();
+
+        int r;
+        int y2 = y0;
+
         for (int x = x0; x < x1; x++)
         {
-            yt += random.Next(-1, 2); ;
-            for (int y = yt; y1 < y; y--)
+            r = rand.Next(-1, 2);
+            y2 += r;
+
+            if (y2 > y0 + treshold)
             {
-                var tilePos = tileMap.WorldToCell(new Vector2(x, y));
-                tileMap.SetTile(tilePos, tile);
+                y2 = y0 + treshold;
             }
+            else if (y2 < y0 - treshold) {
+                y2 = y0 - treshold;
+            }
+
+            var tilePos = tileMap.WorldToCell(new Vector2(x, y2));
+            tileMap.SetTile(tilePos, tile);
+
+            points.Add(new Point() { x = x, y = y2 });
         }
+
+        return points;
     }
 
-
-    private void GenerateWorldV2()
+    private List<Point> GenerateLineX(int x0, int x1, int y0)
     {
-        int k = 2;
+        var points = new List<Point>();
 
-        int tr = 10;
-        int size_x = 200;
-        int size_y = - 20;
-
-        int max_y = 15;
-        int min_y = - 10;
-        var listY = new List<int>();
-
-        int x = 0;
-        int y = 0;
-        var rand = new System.Random();
-        for (x = 0; x < size_x + tr; x++)
+        for (int x = x0; x < x1; x++)
         {
-            y += rand.Next(-1 - k, 2 + k);
+            var tilePos = tileMap.WorldToCell(new Vector2(x, y0));
+            tileMap.SetTile(tilePos, tile);
 
-            if (max_y < y)
-            {
-                y = max_y;
-            }
-            else if (y < min_y)
-            {
-                y = min_y;
-            }
-
-            listY.Add(y);
+            points.Add(new Point() { x = x, y = y0 });
         }
 
-        int y2;
-        var listY2 = new List<int>();
-        for (int i0 = tr; i0 < size_x + tr; i0++)
-        {
-            y2 = 0;
-            for (int i1 = 0; i1 < tr; i1++)
-                y2 += listY[i0 - i1];
-
-            listY2.Add(y2 / tr);
-        }
-
-        for (x = 0; x < size_x; x++)
-        {
-            for (y = listY2[x]; y > size_y; y--)
-            {
-                var tilePos = tileMap.WorldToCell(new Vector2(x, y));
-                tileMap.SetTile(tilePos, tile);
-            }
-        }
-    }
-
-    private void GetMapSize(MapSize mapSize, out int width, out int height)
-    {
-        switch (mapSize) {
-            case MapSize.small:
-                {
-                    width = mapConst * 6;
-                    height = mapConst * 2;
-                    break;
-                }
-            case MapSize.medium:
-                {
-                    width = mapConst * 10;
-                    height = mapConst * 3;
-                    break;
-                }
-            case MapSize.large:
-                {
-                    width = mapConst * 14;
-                    height = mapConst * 4;
-                    break;
-                }
-            default:
-                {
-                    throw new Exception("Error");
-                }
-        }
-    }
-
-    enum MapSize
-    {
-        small = 0,
-        medium = 1,
-        large = 2
+        return points;
     }
 }

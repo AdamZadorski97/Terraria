@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c07df29d1b35e8418b8beee53424582, type: 3}
   m_Name: WorldProperties
   m_EditorClassIdentifier: 
-  worldSize: {x: 0, y: 0}
+  mapX0: 0
+  mapX1: 100
+  mapBiome: 100
