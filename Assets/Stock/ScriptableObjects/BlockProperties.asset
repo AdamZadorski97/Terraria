@@ -16,7 +16,7 @@ MonoBehaviour:
   - tileId: 1
     tileName: Dirt
     itemType: 0
-    tile: {fileID: 11400000, guid: 5a59e806e31c2f64ba4084929a30b850, type: 2}
+    tile: {fileID: 11400000, guid: 457f8554f04ee84408795a3b2a1d8559, type: 2}
     timeToDestroy: 0.25
     lootFromBlocks:
     - blocksLoot:
@@ -32,6 +32,48 @@ MonoBehaviour:
   - tileId: 2
     tileName: Stone
     itemType: 0
-    tile: {fileID: 11400000, guid: e82063890aea8b0479a2687779b31f4d, type: 2}
+    tile: {fileID: 11400000, guid: bffde11226e5f70488b2d556021154e2, type: 2}
     timeToDestroy: 0.5
-    lootFromBlocks: []
+    lootFromBlocks:
+    - blocksLoot:
+        id: 1001
+        lootName: Dirt Ore
+        lootSprite: {fileID: 21300000, guid: 43cc241925b9ed9458e6249bf39e6d0e, type: 3}
+      value: 9
+    - blocksLoot:
+        id: 1002
+        lootName: Stone Ore
+        lootSprite: {fileID: 21300000, guid: da945fa8d7f53ba4bb227126ebcc39d7, type: 3}
+      value: 1
+  - tileId: 3
+    tileName: Stone
+    itemType: 0
+    tile: {fileID: 11400000, guid: 457f8554f04ee84408795a3b2a1d8559, type: 2}
+    timeToDestroy: 1
+    lootFromBlocks:
+    - blocksLoot:
+        id: 1001
+        lootName: Dirt Ore
+        lootSprite: {fileID: 21300000, guid: 43cc241925b9ed9458e6249bf39e6d0e, type: 3}
+      value: 9
+    - blocksLoot:
+        id: 1002
+        lootName: Stone Ore
+        lootSprite: {fileID: 21300000, guid: da945fa8d7f53ba4bb227126ebcc39d7, type: 3}
+      value: 1
+  - tileId: 4
+    tileName: Stone
+    itemType: 0
+    tile: {fileID: 11400000, guid: a360280a566d376489e81da00e67f8fd, type: 2}
+    timeToDestroy: 2
+    lootFromBlocks:
+    - blocksLoot:
+        id: 1001
+        lootName: Dirt Ore
+        lootSprite: {fileID: 21300000, guid: 43cc241925b9ed9458e6249bf39e6d0e, type: 3}
+      value: 9
+    - blocksLoot:
+        id: 1002
+        lootName: Stone Ore
+        lootSprite: {fileID: 21300000, guid: da945fa8d7f53ba4bb227126ebcc39d7, type: 3}
+      value: 1

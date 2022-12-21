@@ -13,7 +13,7 @@ public class P_MineController : MonoBehaviour
     private P_Sounds p_Sounds;
     private P_InventoryController p_InventoryController;
     private float currentMiningTime;
-    private float miningTime = Mathf.Infinity;
+    public float miningTime = Mathf.Infinity;
     private Vector3Int currentMinePosition;
 
     [SerializeField] private LayerMask objectMask;
@@ -72,6 +72,7 @@ public class P_MineController : MonoBehaviour
                 }
                 Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
                 miningTime = GetBlockProporties(tile).timeToDestroy;
+                Debug.Log(GetBlockProporties(tile).timeToDestroy);
                 miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 1.1f, 0);
 
                 currentMiningTime += Time.deltaTime;
@@ -184,7 +185,7 @@ public class P_MineController : MonoBehaviour
     {
         foreach (Block block in blockProporties.blocks)
         {
-            if (block.tile = tile)
+            if (block.tile == tile)
             {
                 return block;
             }
