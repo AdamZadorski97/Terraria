@@ -124,21 +124,23 @@ public class P_InventoryController : MonoBehaviour
             ClearTempPick();
         }
 
-        lastSlotGet = slotNumber;
-
+      
         tempIDOnPickup = inventorySlots[slotNumber].itemID;
         tempItemType = inventorySlots[slotNumber].itemType;
         tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
+
         if (InputController.Instance.Actions.stackItems.IsPressed)
         {
-            tempAmountOnPickup = inventorySlots[slotNumber].itemAmount;
-            GetItem(slotNumber, tempAmountOnPickup);
+            tempAmountOnPickup += inventorySlots[slotNumber].itemAmount;
+            GetItem(slotNumber, inventorySlots[slotNumber].itemAmount);
         }
         else
         {
             tempAmountOnPickup++;
             GetItem(slotNumber, 1);
         }
+
+        lastSlotGet = slotNumber;
         UpdateTempPickCanvas();
 
 
