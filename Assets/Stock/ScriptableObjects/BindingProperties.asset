@@ -85,3 +85,7 @@ MonoBehaviour:
     inputControlType: 17
     mouse: 0
     key: 5
+  - name: stackHalfItems
+    inputControlType: 0
+    mouse: 0
+    key: 8

@@ -74,14 +74,14 @@ public class P_InventoryController : MonoBehaviour
             ClearRecipieSlot();
             userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemSprite);
         }
-      
+
         userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
 
 
         ClearTempPick();
         CraftingPanel.SetActive(false);
     }
- 
+
 
     public bool CheckCraftingPanelOpen()
     {
@@ -124,7 +124,7 @@ public class P_InventoryController : MonoBehaviour
             ClearTempPick();
         }
 
-      
+
         tempIDOnPickup = inventorySlots[slotNumber].itemID;
         tempItemType = inventorySlots[slotNumber].itemType;
         tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
@@ -133,6 +133,12 @@ public class P_InventoryController : MonoBehaviour
         {
             tempAmountOnPickup += inventorySlots[slotNumber].itemAmount;
             GetItem(slotNumber, inventorySlots[slotNumber].itemAmount);
+        }
+        else if (InputController.Instance.Actions.stackHalfItems.IsPressed)
+        {
+            int half = (int)inventorySlots[slotNumber].itemAmount / 2;
+            tempAmountOnPickup += half;
+            GetItem(slotNumber, half);
         }
         else
         {
@@ -148,7 +154,7 @@ public class P_InventoryController : MonoBehaviour
 
     public void SetSlotDataOnClick(int slotNumber)
     {
-        if(tempIDOnPickup == 0 )
+        if (tempIDOnPickup == 0)
         {
             if (craftingSlots[slotNumber].itemAmount > 0)
             {
@@ -160,6 +166,7 @@ public class P_InventoryController : MonoBehaviour
                     craftingSlots[slotNumber].itemID = 0;
                     userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
                 }
+
                 else
                 {
                     AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, 1);
@@ -188,8 +195,16 @@ public class P_InventoryController : MonoBehaviour
             {
                 craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
                 tempAmountOnPickup = 0;
-             
+
             }
+            else if (InputController.Instance.Actions.stackHalfItems.IsPressed)
+            {
+                int half = (int)tempAmountOnPickup / 2;
+                tempAmountOnPickup -= half;
+                craftingSlots[slotNumber].itemAmount += half;
+                userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+            }
+
             else
             {
                 craftingSlots[slotNumber].itemAmount++;

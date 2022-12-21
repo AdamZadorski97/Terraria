@@ -87,6 +87,7 @@ public class InputActions : PlayerActionSet
 
     public PlayerAction openCrafting;
     public PlayerAction stackItems;
+    public PlayerAction stackHalfItems;
 
     public InputActions()
     {
@@ -114,6 +115,7 @@ public class InputActions : PlayerActionSet
 
         openCrafting = CreatePlayerAction("openCrafting");
         stackItems = CreatePlayerAction("stackItem");
+        stackHalfItems = CreatePlayerAction("stackHalfItem");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -181,6 +183,9 @@ public class InputActions : PlayerActionSet
 
         playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").key);
         playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").inputControlType);
+
+        playerActions.stackHalfItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").key);
+        playerActions.stackHalfItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").inputControlType);
 
         return playerActions;
     }
