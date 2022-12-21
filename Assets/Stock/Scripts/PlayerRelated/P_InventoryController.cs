@@ -153,10 +153,34 @@ public class P_InventoryController : MonoBehaviour
 
     public void SetSlotDataOnClick(int slotNumber)
     {
-        if (tempAmountOnPickup == 0)
+        if(tempIDOnPickup == 0)
         {
+            if (InputController.Instance.Actions.stackItems.IsPressed)
+            {
+                AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
+                craftingSlots[slotNumber].itemSprite = null;
+                craftingSlots[slotNumber].itemAmount = 0;
+                craftingSlots[slotNumber].itemID = 0;
+                userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+            }
+            else
+            {
+                AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, 1);
+            
+                craftingSlots[slotNumber].itemAmount--;
+
+                if(craftingSlots[slotNumber].itemAmount == 0)
+                {
+                    craftingSlots[slotNumber].itemID = 0;
+                    craftingSlots[slotNumber].itemSprite = null;
+                }
+                userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+            }
+            CheckRecipie();
             return;
         }
+
+
         if (craftingSlots[slotNumber].itemID == 0 || craftingSlots[slotNumber].itemID == tempIDOnPickup)
         {
             craftingSlots[slotNumber].itemID = tempIDOnPickup;
@@ -164,6 +188,7 @@ public class P_InventoryController : MonoBehaviour
             {
                 craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
                 tempAmountOnPickup = 0;
+             
             }
             else
             {
@@ -173,33 +198,20 @@ public class P_InventoryController : MonoBehaviour
             craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
         }
 
+        else if (craftingSlots[slotNumber].itemID != tempIDOnPickup)
+        {
+            AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
+            craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
+            craftingSlots[slotNumber].itemAmount = tempAmountOnPickup;
+            craftingSlots[slotNumber].itemID = tempIDOnPickup;
+        }
 
+        if (tempAmountOnPickup == 0)
+        {
+            tempIDOnPickup = 0;
+        }
 
-
-
-        //else if (craftingSlots[slotNumber].itemID != tempIDOnPickup)
-        //{
-
-        //    AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
-
-        //    craftingSlots[slotNumber].itemAmount = 0;
-        //    craftingSlots[slotNumber].itemID = tempIDOnPickup;
-
-        //}
-
-        //else if (craftingSlots[slotNumber].itemID == tempIDOnPickup)
-        //{
-        //    if (InputController.Instance.Actions.stackItems.IsPressed)
-        //    {
-        //        craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
-        //    }
-        //    else
-        //    {
-        //        craftingSlots[slotNumber].itemAmount++;
-        //    }
-        //}
-        craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
-        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, tempSpriteOnPickup);
+        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
 
 
         CheckRecipie();
@@ -261,8 +273,11 @@ public class P_InventoryController : MonoBehaviour
                 readyRecipieSlot.itemSprite = craftingRecipie.sprite;
                 readyRecipieSlot.itemAmount = craftingRecipie.amount;
                 userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
-                Debug.Log("RecipieFound");
                 return;
+            }
+            else
+            {
+                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(0, null);
             }
 
         }
