@@ -80,7 +80,7 @@ public class UserInterfaceController : MonoBehaviour
         oxygenBar.DOFillAmount(value, 0.5f);
     }
 
-    public int GetCurrentSlot()
+    public int GetCurrentSlotNumber()
     {
         return currenteQBoxSelected;
     }

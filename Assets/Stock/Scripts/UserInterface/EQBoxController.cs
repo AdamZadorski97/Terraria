@@ -2,14 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using MPUIKIT;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
-public class EQBoxController : MonoBehaviour
+public class EQBoxController : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text itemAmount;
     [SerializeField] private MPImage frame;
     private UserInterfaceProperties userInterfaceProperties;
-
+    [SerializeField] UnityEvent OnRightClick;
     private void Start()
     {
         userInterfaceProperties = ScriptableManager.Instance.userInterfaceProperties;
@@ -37,5 +39,13 @@ public class EQBoxController : MonoBehaviour
     public void DeactivateBox()
     {
         frame.color = userInterfaceProperties.EQBoxDeactive;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnRightClick.Invoke();
+        }
     }
 }

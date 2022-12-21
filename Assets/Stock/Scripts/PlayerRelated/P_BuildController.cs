@@ -44,30 +44,30 @@ public class P_BuildController : MonoBehaviour
         if (GetMouseHit())
             return;
 
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.ore)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.ore)
             return;
 
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemAmount > 0)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemAmount > 0)
         {
-            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.block)
+            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.block)
             {
                 var tilePos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
-                tileMap.SetTile(tilePos, GetBlockProporties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemID));
+                tileMap.SetTile(tilePos, GetBlockProporties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemID));
             }
 
-            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemType == ItemType.interactiveItem)
+            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.interactiveItem)
             {
                 if (!CheckBlockAbove())
                     return;
                 Debug.Log("place");
                 var itemPos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
-                var item = GetItemProperties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlot()].itemID);
+                var item = GetItemProperties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemID);
                 GameObject placedItem = Instantiate(item.itemPrefab);
                 placedItem.transform.position = itemPos + new Vector3(0.5f, 0.5f);
             }
 
 
-            p_InventoryController.GetItem(UserInterfaceController.Instance.GetCurrentSlot());
+            p_InventoryController.GetItem(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()], UserInterfaceController.Instance.GetCurrentSlotNumber());
             lightTilemapCollider2D.Initialize();
             Light2D.ForceUpdateAll();
             LightingManager2D.ForceUpdate();

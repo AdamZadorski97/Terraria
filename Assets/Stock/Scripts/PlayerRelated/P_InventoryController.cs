@@ -132,18 +132,18 @@ public class P_InventoryController : MonoBehaviour
         if (InputController.Instance.Actions.stackItems.IsPressed)
         {
             tempAmountOnPickup += inventorySlots[slotNumber].itemAmount;
-            GetItem(slotNumber, inventorySlots[slotNumber].itemAmount);
+            GetItem(inventorySlots[slotNumber], slotNumber, inventorySlots[slotNumber].itemAmount);
         }
         else if (InputController.Instance.Actions.stackHalfItems.IsPressed)
         {
             int half = (int)inventorySlots[slotNumber].itemAmount / 2;
             tempAmountOnPickup += half;
-            GetItem(slotNumber, half);
+            GetItem(inventorySlots[slotNumber], slotNumber, half);
         }
         else
         {
             tempAmountOnPickup++;
-            GetItem(slotNumber, 1);
+            GetItem(inventorySlots[slotNumber], slotNumber, 1);
         }
 
         lastSlotGet = slotNumber;
@@ -152,40 +152,79 @@ public class P_InventoryController : MonoBehaviour
 
     }
 
+
+    public void GetFromCraftingSLot(int slotNumber)
+    {
+        if (craftingSlots[slotNumber].itemAmount <= 0)
+            return;
+
+        if (tempIDOnPickup != craftingSlots[slotNumber].itemID && tempIDOnPickup!=0)
+            return;
+
+
+     
+
+
+        tempIDOnPickup = craftingSlots[slotNumber].itemID;
+        tempItemType = craftingSlots[slotNumber].itemType;
+        tempSpriteOnPickup = craftingSlots[slotNumber].itemSprite;
+
+        if (InputController.Instance.Actions.stackItems.IsPressed)
+        {
+            tempAmountOnPickup += craftingSlots[slotNumber].itemAmount;
+            GetItem(craftingSlots[slotNumber], slotNumber, craftingSlots[slotNumber].itemAmount, true);
+
+        }
+        else if (InputController.Instance.Actions.stackHalfItems.IsPressed)
+        {
+            int half = (int)inventorySlots[slotNumber].itemAmount / 2;
+            tempAmountOnPickup += half;
+            GetItem(craftingSlots[slotNumber], slotNumber, half, true);
+        }
+        else
+        {
+            tempAmountOnPickup++;
+            GetItem(craftingSlots[slotNumber], slotNumber, 1, true);
+        }
+        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+        lastSlotGet = slotNumber;
+        UpdateTempPickCanvas();
+    }
+
     public void SetSlotDataOnClick(int slotNumber)
     {
-        if (tempIDOnPickup == 0)
-        {
-            if (craftingSlots[slotNumber].itemAmount > 0)
-            {
-                if (InputController.Instance.Actions.stackItems.IsPressed)
-                {
-                    AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
-                    craftingSlots[slotNumber].itemSprite = null;
-                    craftingSlots[slotNumber].itemAmount = 0;
-                    craftingSlots[slotNumber].itemID = 0;
-                    userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
-                }
+        //if (tempIDOnPickup == 0)
+        //{
+        //    if (craftingSlots[slotNumber].itemAmount > 0)
+        //    {
+        //        if (InputController.Instance.Actions.stackItems.IsPressed)
+        //        {
+        //            AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
+        //            craftingSlots[slotNumber].itemSprite = null;
+        //            craftingSlots[slotNumber].itemAmount = 0;
+        //            craftingSlots[slotNumber].itemID = 0;
+        //            userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+        //        }
 
-                else
-                {
-                    AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, 1);
+        //        else
+        //        {
+        //            AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, 1);
 
-                    craftingSlots[slotNumber].itemAmount--;
+        //            craftingSlots[slotNumber].itemAmount--;
 
-                    if (craftingSlots[slotNumber].itemAmount == 0)
-                    {
-                        craftingSlots[slotNumber].itemID = 0;
-                        craftingSlots[slotNumber].itemSprite = null;
-                    }
-                    userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
-                }
+        //            if (craftingSlots[slotNumber].itemAmount == 0)
+        //            {
+        //                craftingSlots[slotNumber].itemID = 0;
+        //                craftingSlots[slotNumber].itemSprite = null;
+        //            }
+        //            userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+        //        }
 
-                CheckRecipie();
-            }
-            UpdateTempPickCanvas();
-            return;
-        }
+        //        CheckRecipie();
+        //    }
+        //    UpdateTempPickCanvas();
+        //    return;
+        //}
 
 
         if (craftingSlots[slotNumber].itemID == 0 || craftingSlots[slotNumber].itemID == tempIDOnPickup)
@@ -214,14 +253,14 @@ public class P_InventoryController : MonoBehaviour
             craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
         }
 
-        else if (craftingSlots[slotNumber].itemID != tempIDOnPickup)
-        {
-            AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
-            craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
-            craftingSlots[slotNumber].itemAmount = tempAmountOnPickup;
-            craftingSlots[slotNumber].itemID = tempIDOnPickup;
-            ClearTempPick();
-        }
+        //else if (craftingSlots[slotNumber].itemID != tempIDOnPickup)
+        //{
+        //    AddNewItem(craftingSlots[slotNumber].itemID, craftingSlots[slotNumber].itemType, null, craftingSlots[slotNumber].itemSprite, craftingSlots[slotNumber].itemAmount);
+        //    craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
+        //    craftingSlots[slotNumber].itemAmount = tempAmountOnPickup;
+        //    craftingSlots[slotNumber].itemID = tempIDOnPickup;
+        //    ClearTempPick();
+        //}
 
         if (tempAmountOnPickup == 0)
         {
@@ -339,16 +378,19 @@ public class P_InventoryController : MonoBehaviour
         }
     }
 
-    public void GetItem(int slot, int amount = 1)
+    public void GetItem(InventorySlot inventorySlot, int slot, int amount = 1, bool isCraftingSloot = false)
     {
-        inventorySlots[slot].itemAmount -= amount;
-        if (inventorySlots[slot].itemAmount <= 0)
+        inventorySlot.itemAmount -= amount;
+        if (inventorySlot.itemAmount <= 0)
         {
-            inventorySlots[slot].itemID = 0;
-            inventorySlots[slot].itemSprite = null;
+            inventorySlot.itemID = 0;
+            inventorySlot.itemSprite = null;
         }
 
-        userInterfaceController.eQBoxControllers[slot].UpdateItemAmount(inventorySlots[slot].itemAmount, inventorySlots[slot].itemSprite);
+        if(isCraftingSloot)
+        userInterfaceController.eQBoxCraftingControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemSprite);
+        else
+            userInterfaceController.eQBoxControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemSprite);
     }
 
     private void ClearRecipieSlot()
