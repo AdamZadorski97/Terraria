@@ -22,7 +22,7 @@ public class P_UseItem : MonoBehaviour
 
     public void UseWeapon()
     {
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType != ItemType.weapon)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType != ItemType.weapon)
             return;
     }
 

@@ -8,7 +8,7 @@ using static FunkyCode.DayLightCollider2D;
 public class WorldGenerator : MonoBehaviour
 {
     private WorldProperties worldParameters;
-    private BlockProperties blockProperties;
+   [SerializeField] private ItemList blockList;
 
     struct Point
     {
@@ -20,7 +20,6 @@ public class WorldGenerator : MonoBehaviour
     private void Start()
     {
         worldParameters = ScriptableManager.Instance.worldProperties;
-        blockProperties = ScriptableManager.Instance.blockProperties;
         GenerateTerrain();
     }
 
@@ -33,7 +32,7 @@ public class WorldGenerator : MonoBehaviour
         int biome = worldParameters.mapBiome;
         int treshold = worldParameters.mapAxtreshold;
 
-        Tile tile = blockProperties.blocks[0].tile;
+        Tile tile = blockList.item[0].tile;
         List<Point> lineDown;
         int y0;
 
@@ -47,11 +46,11 @@ public class WorldGenerator : MonoBehaviour
 
         // ------------------------- mid
 
-        for (int i = 1; i < blockProperties.blocks.Count; i++)
+        for (int i = 0; i < 1; i++)
         {
            
 
-            tile = blockProperties.blocks[i].tile;
+            tile = blockList.item[0].tile;
             lineUp = lineDown;
 
             y0 = -(i + 1) * biome;

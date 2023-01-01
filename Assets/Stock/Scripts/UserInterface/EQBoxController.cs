@@ -17,13 +17,20 @@ public class EQBoxController : MonoBehaviour, IPointerClickHandler
         userInterfaceProperties = ScriptableManager.Instance.userInterfaceProperties;
     }
 
-    public void UpdateItemAmount(int value, Sprite sprite)
+    public void UpdateItemAmount(int value, ItemProperties itemProperties)
     {
+        if(itemProperties.itemType == ItemType.none)
+        {
+            itemAmount.text = "0";
+            itemImage.enabled = false;
+            return;
+        }
+
         itemAmount.text = value.ToString();
         if (value > 0)
         {
             itemImage.enabled = true;
-            itemImage.sprite = sprite;
+            itemImage.sprite = itemProperties.sprite;
         }
         else
         {
@@ -47,5 +54,12 @@ public class EQBoxController : MonoBehaviour, IPointerClickHandler
         {
             OnRightClick.Invoke();
         }
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnRightClick.Invoke();
+        }
     }
+
+
 }

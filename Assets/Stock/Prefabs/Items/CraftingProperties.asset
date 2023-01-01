@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f13976b214256448dbba9f994e9988, type: 3}
+  m_Name: CraftingProperties
+  m_EditorClassIdentifier: 
+  recipies:
+  - requiedItem:
+    - {fileID: 11400000, guid: 79468792427dfb1408302809412cad5c, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    - {fileID: 11400000, guid: 405e9e4adbdfc554a83fc6a10cf675a2, type: 2}
+    craftedItemAmount: 1
+    itemProperties: {fileID: 11400000, guid: bd722856427dfad47bd1b2bd64c00f0c, type: 2}

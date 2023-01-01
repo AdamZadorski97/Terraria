@@ -45,7 +45,7 @@ public class P_Weapon : MonoBehaviour
     [Button]
     public void Shoot()
     {
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType != ItemType.weapon)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType != ItemType.weapon)
             return;
 
 

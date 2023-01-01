@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276cceac99fc3534d90cbbda6ba890ce, type: 3}
+  m_Name: 1 Dirt
+  m_EditorClassIdentifier: 
+  itemID: 1
+  itemType: 1
+  itemName: Dirt Block
+  itemPrefab: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 99dfe1a8f9cf29949bb4d9186b54eea8, type: 3}
+  miningTime: 1
+  tile: {fileID: 11400000, guid: 6ed461a7c2fda174e972ad28301af15a, type: 2}
+  loot:
+  - item: {fileID: 11400000}
+    amount: 1

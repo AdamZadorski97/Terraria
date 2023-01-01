@@ -18,11 +18,8 @@ public class P_InventoryController : MonoBehaviour
     [SerializeField] private SpriteRenderer playerInventoryVisualization;
     [SerializeField] private GameObject CraftingPanel;
 
-    public int tempIDOnPickup;
+    public ItemProperties tempItemProperties;
     public int tempAmountOnPickup;
-    public ItemType tempItemType;
-    public Sprite tempSpriteOnPickup;
-    public GameObject tempItemPrefab;
     private int lastSlotGet;
 
     private void Awake()
@@ -54,7 +51,8 @@ public class P_InventoryController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.weapon)
+        if (inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType != ItemType.none)
+        if (inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.weapon)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             playerInventoryVisualizationPivot.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - playerInventoryVisualizationPivot.position);
@@ -73,25 +71,25 @@ public class P_InventoryController : MonoBehaviour
 
     private void TurnOffCraftingPanel()
     {
-        AddNewItem(tempIDOnPickup, tempItemType, null, tempSpriteOnPickup, tempAmountOnPickup);
+        AddNewItem(tempItemProperties, tempAmountOnPickup);
         for (int i = 0; i < 9; i++)
         {
             if (craftingSlots[i].itemAmount > 0)
             {
 
-                AddNewItem(craftingSlots[i].itemID, craftingSlots[i].itemType, null, craftingSlots[i].itemSprite, craftingSlots[i].itemAmount);
+                AddNewItem(craftingSlots[i].itemProperties, craftingSlots[i].itemAmount);
                 craftingSlots[i].itemAmount = 0;
 
                 if (craftingSlots[i].itemAmount == 0)
                 {
-                    craftingSlots[i].itemID = 0;
+                    craftingSlots[i].itemProperties = ScriptableManager.Instance.itemList.item[0];
                 }
             }
             ClearRecipieSlot();
-            userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemSprite);
+            userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemProperties);
         }
 
-        userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
+        userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemProperties);
 
 
         ClearTempPick();
@@ -108,6 +106,7 @@ public class P_InventoryController : MonoBehaviour
     {
         craftingProperties = ScriptableManager.Instance.craftingProperties;
         userInterfaceController = UserInterfaceController.Instance;
+        tempItemProperties = ScriptableManager.Instance.itemList.item[0];
         int number = 0;
         foreach (InventorySlot slot in inventorySlots)
         {
@@ -122,7 +121,7 @@ public class P_InventoryController : MonoBehaviour
         int slotNumber = 0;
         foreach (InventorySlot slot in inventorySlots)
         {
-            userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
+            userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemProperties);
             slotNumber++;
         }
     }
@@ -136,15 +135,12 @@ public class P_InventoryController : MonoBehaviour
 
         if (slotNumber != lastSlotGet)
         {
-            AddNewItem(tempIDOnPickup, tempItemType, null, tempSpriteOnPickup, tempAmountOnPickup);
+            AddNewItem(tempItemProperties, tempAmountOnPickup);
             ClearTempPick();
         }
 
+        tempItemProperties = inventorySlots[slotNumber].itemProperties;
 
-        tempIDOnPickup = inventorySlots[slotNumber].itemID;
-        tempItemType = inventorySlots[slotNumber].itemType;
-        tempSpriteOnPickup = inventorySlots[slotNumber].itemSprite;
-        tempItemPrefab = inventorySlots[slotNumber].itemPrefab;
         if (InputController.Instance.Actions.stackItemsAction.IsPressed)
         {
             tempAmountOnPickup += inventorySlots[slotNumber].itemAmount;
@@ -174,13 +170,10 @@ public class P_InventoryController : MonoBehaviour
         if (craftingSlots[slotNumber].itemAmount <= 0)
             return;
 
-        if (tempIDOnPickup != craftingSlots[slotNumber].itemID && tempIDOnPickup != 0)
-            return;
+      
 
-        tempIDOnPickup = craftingSlots[slotNumber].itemID;
-        tempItemType = craftingSlots[slotNumber].itemType;
-        tempSpriteOnPickup = craftingSlots[slotNumber].itemSprite;
-        tempItemPrefab = craftingSlots[slotNumber].itemPrefab;
+        tempItemProperties = craftingSlots[slotNumber].itemProperties;
+
         if (InputController.Instance.Actions.stackItemsAction.IsPressed)
         {
             tempAmountOnPickup += craftingSlots[slotNumber].itemAmount;
@@ -198,16 +191,18 @@ public class P_InventoryController : MonoBehaviour
             tempAmountOnPickup++;
             GetItem(craftingSlots[slotNumber], slotNumber, 1, true);
         }
-        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemProperties);
         lastSlotGet = slotNumber;
         UpdateTempPickCanvas();
     }
 
     public void SetSlotDataOnClick(int slotNumber)
     {
-        if (craftingSlots[slotNumber].itemID == 0 || craftingSlots[slotNumber].itemID == tempIDOnPickup)
+        if(tempItemProperties.itemType!=ItemType.none)
+
+        if (craftingSlots[slotNumber].itemProperties.itemType == ItemType.none || craftingSlots[slotNumber].itemProperties == tempItemProperties)
         {
-            craftingSlots[slotNumber].itemID = tempIDOnPickup;
+            craftingSlots[slotNumber].itemProperties = tempItemProperties;
             if (InputController.Instance.Actions.stackItemsAction.IsPressed)
             {
                 craftingSlots[slotNumber].itemAmount += tempAmountOnPickup;
@@ -219,7 +214,7 @@ public class P_InventoryController : MonoBehaviour
                 int half = (int)tempAmountOnPickup / 2;
                 tempAmountOnPickup -= half;
                 craftingSlots[slotNumber].itemAmount += half;
-                userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+                userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemProperties);
             }
 
             else
@@ -228,8 +223,7 @@ public class P_InventoryController : MonoBehaviour
                 tempAmountOnPickup--;
 
             }
-            craftingSlots[slotNumber].itemSprite = tempSpriteOnPickup;
-            craftingSlots[slotNumber].itemPrefab = tempItemPrefab;
+            craftingSlots[slotNumber].itemProperties = tempItemProperties;
         }
 
         if (tempAmountOnPickup == 0)
@@ -237,7 +231,7 @@ public class P_InventoryController : MonoBehaviour
             ClearTempPick();
         }
 
-        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemSprite);
+        userInterfaceController.eQBoxCraftingControllers[slotNumber].UpdateItemAmount(craftingSlots[slotNumber].itemAmount, craftingSlots[slotNumber].itemProperties);
 
         UpdateTempPickCanvas();
         CheckRecipie();
@@ -250,10 +244,12 @@ public class P_InventoryController : MonoBehaviour
             return;
         }
 
-        AddNewItem(tempIDOnPickup, tempItemType, null, tempSpriteOnPickup, tempAmountOnPickup, tempItemPrefab);
+
+        AddNewItem(tempItemProperties);
         ClearTempPick();
 
-        AddNewItem(readyRecipieSlot.itemID, readyRecipieSlot.itemType, null, readyRecipieSlot.itemSprite, readyRecipieSlot.itemAmount, readyRecipieSlot.itemPrefab);
+
+        AddNewItem(readyRecipieSlot.itemProperties, readyRecipieSlot.itemAmount);
       
 
         for (int i = 0; i < 9; i++)
@@ -264,14 +260,14 @@ public class P_InventoryController : MonoBehaviour
                 craftingSlots[i].itemAmount--;
                 if (craftingSlots[i].itemAmount <= 0)
                 {
-                    craftingSlots[i].itemID = 0;
+                    craftingSlots[i].itemProperties = ScriptableManager.Instance.itemList.item[0];
                 }
 
-                userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemSprite);
+                userInterfaceController.eQBoxCraftingControllers[i].UpdateItemAmount(craftingSlots[i].itemAmount, craftingSlots[i].itemProperties);
             }
         }
 
-        userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(0, null);
+        userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(0, ScriptableManager.Instance.itemList.item[0]);
         UpdateTempPickCanvas();
         ClearRecipieSlot();
         CheckRecipie();
@@ -285,24 +281,22 @@ public class P_InventoryController : MonoBehaviour
             int correctCount = 0;
             for (int i = 0; i < 9; i++)
             {
-                if (craftingRecipie.itemID[i] == craftingSlots[i].itemID)
+                if (craftingRecipie.requiedItem[i] == craftingSlots[i].itemProperties)
                 {
+                    Debug.Log(correctCount);
                     correctCount++;
                 }
             }
             if (correctCount == 9)
             {
-                readyRecipieSlot.itemID = craftingRecipie.recipieID;
-                readyRecipieSlot.itemType = craftingRecipie.itemType;
-                readyRecipieSlot.itemSprite = craftingRecipie.sprite;
-                readyRecipieSlot.itemAmount = craftingRecipie.amount;
-                readyRecipieSlot.itemPrefab = craftingRecipie.itemPrefab;
-                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemSprite);
+                readyRecipieSlot.itemAmount = craftingRecipie.craftedItemAmount;
+                readyRecipieSlot.itemProperties = craftingRecipie.itemProperties;
+                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(readyRecipieSlot.itemAmount, readyRecipieSlot.itemProperties);
                 return;
             }
             else
             {
-                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(0, null);
+                userInterfaceController.EQBoxReadyRecipieController.UpdateItemAmount(0, ScriptableManager.Instance.itemList.item[0]);
             }
 
         }
@@ -310,25 +304,21 @@ public class P_InventoryController : MonoBehaviour
 
 
 
-    public void AddNewItem(int ID, ItemType itemType, Tile tile = null, Sprite sprite = null, int amount = 1, GameObject itemPrefab = null)
+    public void AddNewItem(ItemProperties itemProperties, int amount = 1)
     {
+        if (itemProperties.itemType == ItemType.none)
+            return;
+
+
         int slotNumber = 0;
         foreach (InventorySlot slot in inventorySlots)
         {
-            if (ID == slot.itemID)
+            if (itemProperties == slot.itemProperties)
             {
 
                 slot.itemAmount += amount;
-                if (tile != null)
-                    slot.itemSprite = tile.sprite;
-                if (sprite != null)
-                    slot.itemSprite = sprite;
-                if (itemPrefab != null)
-                    slot.itemPrefab = itemPrefab;
 
-                Debug.Log(itemType);
-                slot.itemType = itemType;
-                userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
+                userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemProperties);
                 return;
             }
             slotNumber++;
@@ -339,15 +329,8 @@ public class P_InventoryController : MonoBehaviour
             if (slot.itemAmount == 0)
             {
                 slot.itemAmount += amount;
-                slot.itemID = ID;
-                if (tile != null)
-                    slot.itemSprite = tile.sprite;
-                if (sprite != null)
-                    slot.itemSprite = sprite;
-                if (itemPrefab != null)
-                    slot.itemPrefab = itemPrefab;
-                slot.itemType = itemType;
-                userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemSprite);
+                slot.itemProperties = itemProperties;
+                userInterfaceController.eQBoxControllers[slotNumber].UpdateItemAmount(slot.itemAmount, slot.itemProperties);
                 return;
             }
             slotNumber++;
@@ -359,14 +342,13 @@ public class P_InventoryController : MonoBehaviour
         inventorySlot.itemAmount -= amount;
         if (inventorySlot.itemAmount <= 0)
         {
-            inventorySlot.itemID = 0;
-            inventorySlot.itemSprite = null;
+            inventorySlot.itemProperties = ScriptableManager.Instance.itemList.item[0];
         }
 
         if (isCraftingSloot)
-            userInterfaceController.eQBoxCraftingControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemSprite);
+            userInterfaceController.eQBoxCraftingControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemProperties);
         else
-            userInterfaceController.eQBoxControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemSprite);
+            userInterfaceController.eQBoxControllers[slot].UpdateItemAmount(inventorySlot.itemAmount, inventorySlot.itemProperties);
     }
 
     private void ClearRecipieSlot()
@@ -376,23 +358,17 @@ public class P_InventoryController : MonoBehaviour
     IEnumerator ClearRecipieSlotCoroutine()
     {
         yield return new WaitForEndOfFrame();
-        readyRecipieSlot.itemID = 0;
-        readyRecipieSlot.itemAmount = 0;
-
-        readyRecipieSlot.itemSprite = null;
-        readyRecipieSlot.itemPrefab = null;
+        readyRecipieSlot.itemProperties = ScriptableManager.Instance.itemList.item[0];
     }
     private void ClearTempPick()
     {
-        tempIDOnPickup = 0;
-        tempAmountOnPickup = 0;
-        tempSpriteOnPickup = null;
-        tempItemPrefab = null;
+        tempItemProperties = ScriptableManager.Instance.itemList.item[0];
         FloatingCanvasController.Instance.HideTempPickVizualisation();
     }
     private void UpdateTempPickCanvas()
     {
-        FloatingCanvasController.Instance.ShowTempPickVizualisation(tempSpriteOnPickup, tempAmountOnPickup);
+        if(tempItemProperties.itemType != ItemType.none)
+        FloatingCanvasController.Instance.ShowTempPickVizualisation(tempItemProperties, tempAmountOnPickup);
     }
 
     private GameObject tempHoldingObjectPrefab;
@@ -402,24 +378,31 @@ public class P_InventoryController : MonoBehaviour
         {
             Destroy(tempHoldingObjectPrefab.gameObject);
         }
+        ItemType currentItemType = inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemProperties.itemType;
+
+        if (currentItemType == ItemType.none)
+        {
+            playerInventoryVisualization.enabled = false;
+        }
          
 
-        if (inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemType == ItemType.ore)
+        if (currentItemType == ItemType.ore)
         {
-            if (inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemSprite = null)
+            if (inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.none)
             {
                 playerInventoryVisualization.enabled = false;
             }
             else
             {
                 playerInventoryVisualization.enabled = true;
-                playerInventoryVisualization.sprite = inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemSprite;
+                playerInventoryVisualization.sprite = inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemProperties.sprite;
             }
         }
-        else if (inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemType == ItemType.weapon)
+      
+        else if (currentItemType == ItemType.weapon)
         {
             playerInventoryVisualization.enabled = false;
-            tempHoldingObjectPrefab = Instantiate(inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemPrefab);
+            tempHoldingObjectPrefab = Instantiate(inventorySlots[userInterfaceController.GetCurrentSlotNumber()].itemProperties.itemPrefab);
             {
                 tempHoldingObjectPrefab.transform.SetParent(playerInventoryVisualizationHoldPivot);
                 tempHoldingObjectPrefab.transform.position = playerInventoryVisualizationHoldPivot.position;
@@ -434,12 +417,7 @@ public class P_InventoryController : MonoBehaviour
 public class InventorySlot
 {
     public int slotNumber;
-    public int itemID;
-    public string itemName;
-    public ItemType itemType;
     public int itemAmount;
-    public Sprite itemSprite;
-    public GameObject itemPrefab;
-
+    public ItemProperties itemProperties;
 }
 

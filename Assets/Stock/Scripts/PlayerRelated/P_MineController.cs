@@ -9,7 +9,7 @@ public class P_MineController : MonoBehaviour
     public LightTilemapCollider2D lightTilemapCollider2D;
     public ParticleSystem miningParticles;
     public GameObject minedSprite;
-    private BlockProperties blockProporties;
+    private ItemList itemList;
     private P_Sounds p_Sounds;
     private P_InventoryController p_InventoryController;
     private float currentMiningTime;
@@ -19,7 +19,7 @@ public class P_MineController : MonoBehaviour
     [SerializeField] private LayerMask objectMask;
     private void Start()
     {
-        blockProporties = ScriptableManager.Instance.blockProperties;
+        itemList = ScriptableManager.Instance.itemList;
         p_Sounds = GetComponent<P_Sounds>();
         p_InventoryController = GetComponent<P_InventoryController>();
     }
@@ -46,12 +46,12 @@ public class P_MineController : MonoBehaviour
             {
                 if (hit.collider.GetComponent<ItemController>())
                 {
-                    Item item = hit.collider.GetComponent<ItemController>().item;
+                    ItemProperties item = hit.collider.GetComponent<ItemController>().itemproperties;
                     miningTime = item.miningTime;
                     currentMiningTime += Time.deltaTime;
                     if (currentMiningTime > miningTime)
                     {
-                        p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
+                        p_InventoryController.AddNewItem(item);
                         Destroy(hit.collider.gameObject);
                         OnStopMining();
                     }
@@ -71,8 +71,8 @@ public class P_MineController : MonoBehaviour
                     currentMiningTime = 0;
                 }
                 Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
-                miningTime = GetBlockProporties(tile).timeToDestroy;
-                Debug.Log(GetBlockProporties(tile).timeToDestroy);
+                miningTime = GetBlockProporties(tile).miningTime;
+                Debug.Log(GetBlockProporties(tile).miningTime);
                 miningParticles.transform.position = tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 1.1f, 0);
 
                 currentMiningTime += Time.deltaTime;
@@ -137,41 +137,41 @@ public class P_MineController : MonoBehaviour
 
     }
 
-    private void CheckIsOnUp(Vector3 checkPosition)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.up, 1, objectMask);
-        if (hit.collider != null)
-        {
-            if (hit.transform.GetComponent<ItemController>())
-            {
-                Item item = hit.collider.GetComponent<ItemController>().item;
-                p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
-            }
-            if(hit.collider.GetComponent<ItemController>())
-            {
-                Destroy(hit.transform.gameObject);
-            }
+    //private void CheckIsOnUp(Vector3 checkPosition)
+    //{
+    //    RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.up, 1, objectMask);
+    //    if (hit.collider != null)
+    //    {
+    //        if (hit.transform.GetComponent<ItemController>())
+    //        {
+    //            ItemProperties item = hit.collider.GetComponent<ItemController>().itemproperties;
+    //            p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
+    //        }
+    //        if(hit.collider.GetComponent<ItemController>())
+    //        {
+    //            Destroy(hit.transform.gameObject);
+    //        }
           
-        }
-    }
+    //    }
+    //}
 
     private void SetupMinedResource(Tilemap tilemap)
     {
         Tile tile = (Tile)tilemap.GetTile(tilemap.WorldToCell(GetMouseHit().point));
-        Block minedResource = GetBlockProporties(tile);
+        ItemProperties minedResource = GetBlockProporties(tile);
 
 
-        foreach (LootFromBlock lootFromBlock in minedResource.lootFromBlocks)
+        foreach (LootOnMined lootFromBlock in minedResource.loot)
         {
-            for (int i = 0; i < lootFromBlock.value; i++)
+            for (int i = 0; i < lootFromBlock.amount; i++)
             {
-                p_InventoryController.AddNewItem(lootFromBlock.blocksLoot.id, ItemType.ore, null, lootFromBlock.blocksLoot.lootSprite);
+                p_InventoryController.AddNewItem(lootFromBlock.item);
             }
         }
 
 
 
-        CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 0, 0));
+       // CheckIsOnUp(tilemap.WorldToCell(GetMouseHit().point) + new Vector3(0.5f, 0, 0));
         minedSprite.gameObject.SetActive(true);
         minedSprite.GetComponent<SpriteRenderer>().sprite = tilemap.GetSprite(tilemap.WorldToCell(GetMouseHit().point));
         minedSprite.transform.localScale = Vector3.one * 0.8f;
@@ -185,9 +185,9 @@ public class P_MineController : MonoBehaviour
         p_Sounds.PlaySound("ResourcePickup");
     }
 
-    private Block GetBlockProporties(Tile tile)
+    private ItemProperties GetBlockProporties(Tile tile)
     {
-        foreach (Block block in blockProporties.blocks)
+        foreach (ItemProperties block in itemList.item)
         {
             if (block.tile == tile)
             {

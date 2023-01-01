@@ -6,8 +6,7 @@ public class ScriptableManager : MonoBehaviour
 {
 
     public static ScriptableManager Instance { get; private set; }
-    public BlockProperties blockProperties;
-    public ItemProperties itemProperties;
+    public ItemList itemList;
     public PlayerProperties playerProperties;
     public SoundsProperties soundsProperties;
     public WorldProperties worldProperties;

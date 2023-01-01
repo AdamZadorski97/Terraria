@@ -46,7 +46,7 @@ public class BulletPool : MonoBehaviour
     {
         string name = "ObjectPool_" + objectToPool.name;
         var parentObject = GameObject.Find(name);
-        if(parentObject !=null)
+        if (parentObject != null)
         {
             spawnedObjectsParrent = parentObject.transform;
         }
@@ -58,7 +58,11 @@ public class BulletPool : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(spawnedObjectsParrent.gameObject);
+        if (spawnedObjectsParrent.gameObject != null)
+        {
+            Destroy(spawnedObjectsParrent.gameObject);
+        }
+
     }
 
 }

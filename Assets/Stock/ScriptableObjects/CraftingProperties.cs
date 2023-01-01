@@ -15,10 +15,7 @@ public class CraftingProperties : ScriptableObject
 public class CraftingRecipie
 {
     [ListDrawerSettings(NumberOfItemsPerPage = 3)]
-    public List<int> itemID;
-    public int recipieID;
-    public ItemType itemType;
-    public Sprite sprite;
-    public int amount;
-    public GameObject itemPrefab;
+    public List<ItemProperties> requiedItem;
+    public int craftedItemAmount;
+    public ItemProperties itemProperties;
 }

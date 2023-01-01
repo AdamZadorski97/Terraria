@@ -48,10 +48,10 @@ public class FloatingCanvasController : MonoBehaviour
         floatingMessageCanvas.SetActive(false);
     }
 
-    public void ShowTempPickVizualisation(Sprite sprite, int amount)
+    public void ShowTempPickVizualisation(ItemProperties itemProperties, int amount)
     {
         floatingTempPickCanvas.SetActive(true);
-        TempPickImage.sprite = sprite;
+        TempPickImage.sprite = itemProperties.sprite;
         TempPickAmount.text = amount.ToString();
     }
 

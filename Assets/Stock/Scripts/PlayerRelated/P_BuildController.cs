@@ -13,8 +13,7 @@ public class P_BuildController : MonoBehaviour
 
     private P_InventoryController p_InventoryController;
     [SerializeField] private Tilemap tileMap;
-    private BlockProperties blockProperties;
-    private ItemProperties itemProperties;
+    private ItemList itemProperties;
     private void Update()
     {
         if (InputController.Instance.Actions.buildAction.WasReleased && !p_InventoryController.CheckCraftingPanelOpen())
@@ -24,8 +23,7 @@ public class P_BuildController : MonoBehaviour
     }
     private void Start()
     {
-        blockProperties = ScriptableManager.Instance.blockProperties;
-        itemProperties = ScriptableManager.Instance.itemProperties;
+        itemProperties = ScriptableManager.Instance.itemList;
         p_InventoryController = GetComponent<P_InventoryController>();
     }
 
@@ -44,27 +42,28 @@ public class P_BuildController : MonoBehaviour
         if (GetMouseHit())
             return;
 
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.ore)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.ore)
             return;
 
-        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.weapon)
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.weapon)
             return;
 
         if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemAmount > 0)
         {
-            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.block)
+            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.block)
             {
+                Debug.Log("Place Tile");
                 var tilePos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
-                tileMap.SetTile(tilePos, GetBlockProporties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemID));
+                tileMap.SetTile(tilePos, p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.tile);
             }
 
-            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.interactiveItem)
+            if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemType == ItemType.interactiveItem)
             {
                 if (!CheckBlockAbove())
                     return;
                 Debug.Log("place");
                 var itemPos = tileMap.WorldToCell(tileMap.WorldToCell(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0))));
-                var item = GetItemProperties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemID);
+                var item = GetItemProperties(p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemProperties.itemID);
                 GameObject placedItem = Instantiate(item.itemPrefab);
                 placedItem.transform.position = itemPos + new Vector3(0.5f, 0.5f);
             }
@@ -118,19 +117,19 @@ public class P_BuildController : MonoBehaviour
 
     private Tile GetBlockProporties(int id)
     {
-        foreach (Block block in blockProperties.blocks)
+        foreach (ItemProperties item in itemProperties.item)
         {
-            if (block.tileId == id)
+            if (item.itemID == id)
             {
-                return block.tile;
+                return item.tile;
             }
         }
         return null;
     }
 
-    private Item GetItemProperties(int id)
+    private ItemProperties GetItemProperties(int id)
     {
-        foreach (Item item in itemProperties.item)
+        foreach (ItemProperties item in itemProperties.item)
         {
             if (item.itemID == id)
             {
