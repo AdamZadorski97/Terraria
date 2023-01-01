@@ -37,3 +37,15 @@ MonoBehaviour:
     itemPrefab: {fileID: 6773774358097145477, guid: 8ef240420d359964781ac257add05d50, type: 3}
     sprite: {fileID: 21300000, guid: b2009c191f7ebe94e908800f9fcb25da, type: 3}
     miningTime: 0.5
+  - itemID: 90
+    item: 2
+    itemName: Spikes
+    itemPrefab: {fileID: 6773774358097145477, guid: 623ae7c7a672de64098109d3de3e13b6, type: 3}
+    sprite: {fileID: 21300002, guid: a4a2ad0f91382ca4394c7104b3259374, type: 3}
+    miningTime: 0.5
+  - itemID: 2000
+    item: 3
+    itemName: Pistol
+    itemPrefab: {fileID: 6773774358097145477, guid: 2819aa00cb1e33d47b8fcb3e79505c49, type: 3}
+    sprite: {fileID: 21300050, guid: 0bbb4973cb6e355408c55e6857cbc224, type: 3}
+    miningTime: 0

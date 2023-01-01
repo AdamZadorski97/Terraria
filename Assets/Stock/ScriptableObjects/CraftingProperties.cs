@@ -20,4 +20,5 @@ public class CraftingRecipie
     public ItemType itemType;
     public Sprite sprite;
     public int amount;
+    public GameObject itemPrefab;
 }

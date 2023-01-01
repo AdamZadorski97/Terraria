@@ -9,7 +9,7 @@ public class P_MoveController : MonoBehaviour
     private P_Sounds p_Sounds;
     private PlayerProperties playerProporties;
     [SerializeField] private LayerMask groundLayer;
-
+    [SerializeField] private Damagable damagable;
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
     private Vector2 inputValue;
@@ -89,10 +89,10 @@ public class P_MoveController : MonoBehaviour
 
     private void Movement()
     {
-        if(isInJumpState)
+        if (isInJumpState)
         {
             jumpStateTime += Time.deltaTime;
-            if(jumpStateTime>0.25f)
+            if (jumpStateTime > 0.25f)
             {
                 isInJumpState = false;
                 jumpStateTime = 0;
@@ -109,7 +109,12 @@ public class P_MoveController : MonoBehaviour
 
         VerticalAirboneMovement();
 
-        if (inputValue.x != 0) SetFacing(inputValue.x);
+        if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x)
+            SetFacing(-1);
+        else
+            SetFacing(1);
+
+      //  if (inputValue.x != 0) SetFacing(inputValue.x);
 
         if (inputValue.x < 0 && CheckWall(Vector2.left) || inputValue.x > 0 && CheckWall(Vector2.right))
         {
@@ -124,8 +129,8 @@ public class P_MoveController : MonoBehaviour
     private void LeaderMovement()
     {
         Debug.Log(inputValue.y);
-        moveVector.x = Mathf.Lerp(moveVector.x, 0 + inputValue.x, Time.deltaTime *10);
-        moveVector.y = inputValue.y  * 4;
+        moveVector.x = Mathf.Lerp(moveVector.x, 0 + inputValue.x, Time.deltaTime * 10);
+        moveVector.y = inputValue.y * 4;
     }
 
 
@@ -242,6 +247,14 @@ public class P_MoveController : MonoBehaviour
     public void OnGroundHit()
     {
         p_Sounds.PlaySound("JumpEnd");
+    }
+
+    public void OnHit()
+    {
+        Debug.Log("On HIt");
+        var diretion = damagable.message.direction;
+        var power = damagable.message.throwPower;
+        moveVector = new Vector2(diretion.x * power, diretion.y * power);
     }
 }
 

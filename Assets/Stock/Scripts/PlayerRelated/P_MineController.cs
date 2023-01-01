@@ -96,7 +96,7 @@ public class P_MineController : MonoBehaviour
     private RaycastHit2D GetMouseHit()
     {
         Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return Physics2D.Raycast(mRay.origin, Vector2.zero, Mathf.Infinity);
+        return Physics2D.Raycast(mRay.origin, Vector2.zero, Mathf.Infinity, objectMask);
     }
 
     private Tilemap GetMiningTilemap()
@@ -147,7 +147,11 @@ public class P_MineController : MonoBehaviour
                 Item item = hit.collider.GetComponent<ItemController>().item;
                 p_InventoryController.AddNewItem(item.itemID, ItemType.interactiveItem, null, item.sprite);
             }
-            Destroy(hit.transform.gameObject);
+            if(hit.collider.GetComponent<ItemController>())
+            {
+                Destroy(hit.transform.gameObject);
+            }
+          
         }
     }
 

@@ -81,13 +81,16 @@ public class InputActions : PlayerActionSet
 
     public PlayerAction mineAction;
     public PlayerAction buildAction;
+    public PlayerAction UseWeaponAction;
 
     public PlayerAction scrollEQUp;
     public PlayerAction scrollEQDown;
 
-    public PlayerAction openCrafting;
-    public PlayerAction stackItems;
-    public PlayerAction stackHalfItems;
+    public PlayerAction openCraftingAction;
+    public PlayerAction stackItemsAction;
+    public PlayerAction stackHalfItemsAction;
+
+
 
     public InputActions()
     {
@@ -109,13 +112,14 @@ public class InputActions : PlayerActionSet
 
         mineAction = CreatePlayerAction("Mine");
         buildAction = CreatePlayerAction("Build");
+        UseWeaponAction = CreatePlayerAction("UseWeapon");
 
         scrollEQUp = CreatePlayerAction("scrollEQUp");
         scrollEQDown = CreatePlayerAction("scrollEQDown");
 
-        openCrafting = CreatePlayerAction("openCrafting");
-        stackItems = CreatePlayerAction("stackItem");
-        stackHalfItems = CreatePlayerAction("stackHalfItem");
+        openCraftingAction = CreatePlayerAction("openCrafting");
+        stackItemsAction = CreatePlayerAction("stackItem");
+        stackHalfItemsAction = CreatePlayerAction("stackHalfItem");
     }
 
     public static InputActions CreateWithDefaultBindings(float minDeadzone, float maxDeadzone)
@@ -172,20 +176,23 @@ public class InputActions : PlayerActionSet
         playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").mouse);
         playerActions.buildAction.AddDefaultBinding(bindingsScriptable.GetBinding("Build").inputControlType);
 
+        playerActions.UseWeaponAction.AddDefaultBinding(bindingsScriptable.GetBinding("UseWeapon").mouse);
+        playerActions.UseWeaponAction.AddDefaultBinding(bindingsScriptable.GetBinding("UseWeapon").inputControlType);
+
         playerActions.scrollEQUp.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQUp").mouse);
         playerActions.scrollEQUp.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQUp").inputControlType);
 
         playerActions.scrollEQDown.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQDown").mouse);
         playerActions.scrollEQDown.AddDefaultBinding(bindingsScriptable.GetBinding("scrollEQDown").inputControlType);
 
-        playerActions.openCrafting.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").key);
-        playerActions.openCrafting.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").inputControlType);
+        playerActions.openCraftingAction.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").key);
+        playerActions.openCraftingAction.AddDefaultBinding(bindingsScriptable.GetBinding("Open Crafting").inputControlType);
 
-        playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").key);
-        playerActions.stackItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").inputControlType);
+        playerActions.stackItemsAction.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").key);
+        playerActions.stackItemsAction.AddDefaultBinding(bindingsScriptable.GetBinding("stackItem").inputControlType);
 
-        playerActions.stackHalfItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").key);
-        playerActions.stackHalfItems.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").inputControlType);
+        playerActions.stackHalfItemsAction.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").key);
+        playerActions.stackHalfItemsAction.AddDefaultBinding(bindingsScriptable.GetBinding("stackHalfItems").inputControlType);
 
         return playerActions;
     }

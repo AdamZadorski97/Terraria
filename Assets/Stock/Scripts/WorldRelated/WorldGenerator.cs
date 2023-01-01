@@ -49,7 +49,7 @@ public class WorldGenerator : MonoBehaviour
 
         for (int i = 1; i < blockProperties.blocks.Count; i++)
         {
-            Debug.Log(i);
+           
 
             tile = blockProperties.blocks[i].tile;
             lineUp = lineDown;

@@ -47,6 +47,9 @@ public class P_BuildController : MonoBehaviour
         if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.ore)
             return;
 
+        if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.weapon)
+            return;
+
         if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemAmount > 0)
         {
             if (p_InventoryController.inventorySlots[UserInterfaceController.Instance.GetCurrentSlotNumber()].itemType == ItemType.block)
